@@ -40,7 +40,7 @@ const App: () => React$Node = () => {
           )}
           <View style={styles.body}>
             <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Test commit</Text>
+              <Text style={styles.sectionTitle}>Test commit 2 from clone</Text>
               <Text style={styles.sectionDescription}>
                 Hello <Text style={styles.highlight}>World</Text>
               </Text>
