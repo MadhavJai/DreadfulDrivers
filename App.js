@@ -60,7 +60,7 @@ const App: () => React$Node = () => {
             <View style={styles.sectionContainer}>
               <Text style={styles.sectionTitle}>Learn More</Text>
               <Text style={styles.sectionDescription}>
-                Read the docs to discover what to do next:
+                THIS IS COMMIT TEST
               </Text>
             </View>
             <LearnMoreLinks />
