@@ -30,17 +30,40 @@ import LaunchScreen from './LaunchScreen';
 import HomeScreen from './HomeScreen';
 
 export default class App extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      timePassed: false,
+    };
+  }
+
+  componentDidMount() {
+    setTimeout(() => {
+      this.setTimePassed();
+    }, 2000);
+  }
+
+  setTimePassed() {
+    this.setState({timePassed: true});
+  }
+
   render() {
-    return (
-      <NativeRouter>
-        <View style={styles.container}>
-          <Switch>
-            <Route exact path="/" component={LaunchScreen} />
-            <Route exact path="/home" component={HomeScreen} />
-          </Switch>
-        </View>
-      </NativeRouter>
-    );
+    if(!this.state.timePassed){
+      return <LaunchScreen/>;
+    }
+    else {
+      return <HomeScreen/>;
+    }
+    // return (
+    //   <NativeRouter>
+    //     <View style={styles.container}>
+    //       <Switch>
+    //         <Route exact path="/" component={LaunchScreen} />
+    //         <Route exact path="/home" component={HomeScreen} />
+    //       </Switch>
+    //     </View>
+    //   </NativeRouter>
+    // );
   }
 }
 
