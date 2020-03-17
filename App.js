@@ -24,54 +24,32 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-const App: () => React$Node = () => {
-  return (
-    <>
-      <StatusBar barStyle="dark-content" />
-      <SafeAreaView>
-        <ScrollView
-          contentInsetAdjustmentBehavior="automatic"
-          style={styles.scrollView}>
-          <Header />
-          {global.HermesInternal == null ? null : (
-            <View style={styles.engine}>
-              <Text style={styles.footer}>Engine: Hermes</Text>
-            </View>
-          )}
-          <View style={styles.body}>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Test commit 2 from clone</Text>
-              <Text style={styles.sectionDescription}>
-                Hello <Text style={styles.highlight}>World</Text>
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>See Your Changes</Text>
-              <Text style={styles.sectionDescription}>
-                <ReloadInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Debug</Text>
-              <Text style={styles.sectionDescription}>
-                <DebugInstructions />
-              </Text>
-            </View>
-            <View style={styles.sectionContainer}>
-              <Text style={styles.sectionTitle}>Learn More</Text>
-              <Text style={styles.sectionDescription}>
-                THIS IS COMMIT TEST
-              </Text>
-            </View>
-            <LearnMoreLinks />
-          </View>
-        </ScrollView>
-      </SafeAreaView>
-    </>
-  );
-};
+import {NativeRouter, Switch, Route} from 'react-router-native';
+
+import LaunchScreen from './LaunchScreen';
+import HomeScreen from './HomeScreen';
+
+export default class App extends React.Component {
+  render() {
+    return (
+      <NativeRouter>
+        <View style={styles.container}>
+          <Switch>
+            <Route exact path="/" component={LaunchScreen} />
+            <Route exact path="/home" component={HomeScreen} />
+          </Switch>
+        </View>
+      </NativeRouter>
+    );
+  }
+}
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   scrollView: {
     backgroundColor: Colors.lighter,
   },
@@ -109,5 +87,3 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
 });
-
-export default App;
