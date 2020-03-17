@@ -30,7 +30,7 @@ import LaunchScreen from './LaunchScreen';
 import HomeScreen from './HomeScreen';
 
 export default class App extends React.Component {
-  constructor(props){
+  constructor(props) {
     super(props);
     this.state = {
       timePassed: false,
@@ -48,11 +48,18 @@ export default class App extends React.Component {
   }
 
   render() {
-    if(!this.state.timePassed){
-      return <LaunchScreen/>;
-    }
-    else {
-      return <HomeScreen/>;
+    if (!this.state.timePassed) {
+      return (
+        <View style={styles.container}>
+          <LaunchScreen />
+        </View>
+      );
+    } else {
+      return (
+        <View style={styles.container}>
+          <HomeScreen />
+        </View>
+      );
     }
     // return (
     //   <NativeRouter>
