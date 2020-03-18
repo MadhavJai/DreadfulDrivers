@@ -16,6 +16,8 @@ import {
   StatusBar,
 } from 'react-native';
 
+import {NavigationContainer} from '@react-navigation/native';
+
 import {
   Header,
   LearnMoreLinks,
@@ -24,7 +26,14 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-import {NativeRouter, Switch, Route} from 'react-router-native';
+import {
+  NativeRouter,
+  Switch,
+  Route,
+  Link,
+  BackButton,
+} from 'react-router-native';
+// import 'react-native-gesture-handler';
 
 import LaunchScreen from './LaunchScreen';
 import HomeScreen from './HomeScreen';
@@ -50,15 +59,19 @@ export default class App extends React.Component {
   render() {
     if (!this.state.timePassed) {
       return (
-        <View style={styles.container}>
-          <LaunchScreen />
-        </View>
+          <NavigationContainer>
+            <View style={styles.container}>
+              <LaunchScreen/>
+            </View>
+          </NavigationContainer>
       );
     } else {
       return (
-        <View style={styles.container}>
-          <HomeScreen />
-        </View>
+          <NavigationContainer>
+            <View style={styles.container}>
+              <HomeScreen/>
+            </View>
+          </NavigationContainer>
       );
     }
     // return (
