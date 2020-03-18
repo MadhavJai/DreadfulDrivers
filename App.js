@@ -7,6 +7,7 @@
  */
 
 import React from 'react';
+import 'react-native-gesture-handler';
 import {
   SafeAreaView,
   StyleSheet,
@@ -28,6 +29,7 @@ import {NativeRouter, Switch, Route} from 'react-router-native';
 
 import LaunchScreen from './LaunchScreen';
 import HomeScreen from './HomeScreen';
+import {NavigationContainer} from '@react-navigation/native';
 
 export default class App extends React.Component {
   constructor(props) {
@@ -50,15 +52,20 @@ export default class App extends React.Component {
   render() {
     if (!this.state.timePassed) {
       return (
-        <View style={styles.container}>
-          <LaunchScreen />
-        </View>
+          <NavigationContainer>
+            <View style={styles.container}>
+              <LaunchScreen />
+            </View>
+          </NavigationContainer>
+
       );
     } else {
       return (
-        <View style={styles.container}>
-          <HomeScreen />
-        </View>
+          <NavigationContainer>
+            <View style={styles.container}>
+              <HomeScreen />
+            </View>
+          </NavigationContainer>
       );
     }
     // return (
