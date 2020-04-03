@@ -12,6 +12,7 @@ import {
   SafeAreaView,
   StyleSheet,
   ScrollView,
+  Button,
   View,
   Text,
   StatusBar,
@@ -27,59 +28,81 @@ import {
 
 import {NativeRouter, Switch, Route} from 'react-router-native';
 
-import LaunchScreen from './LaunchScreen';
-import HomeScreen from './HomeScreen';
 import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import ReportScreen from './ReportScreen';
+import BrowseReportsScreen from './BrowseReportsScreen';
+import PreferencesScreen from './PreferencesScreen';
 
-export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      timePassed: false,
-    };
-  }
-
-  componentDidMount() {
-    setTimeout(() => {
-      this.setTimePassed();
-    }, 2000);
-  }
-
-  setTimePassed() {
-    this.setState({timePassed: true});
-  }
-
-  render() {
-    if (!this.state.timePassed) {
-      return (
-          <NavigationContainer>
-            <View style={styles.container}>
-              <LaunchScreen />
-            </View>
-          </NavigationContainer>
-
-      );
-    } else {
-      return (
-          <NavigationContainer>
-            <View style={styles.container}>
-              <HomeScreen />
-            </View>
-          </NavigationContainer>
-      );
-    }
-    // return (
-    //   <NativeRouter>
-    //     <View style={styles.container}>
-    //       <Switch>
-    //         <Route exact path="/" component={LaunchScreen} />
-    //         <Route exact path="/home" component={HomeScreen} />
-    //       </Switch>
-    //     </View>
-    //   </NativeRouter>
-    // );
-  }
+function showPreferences({navigation}){
+  return (
+      <View style={styles.container}>
+        <PreferencesScreen/>
+      </View>
+  );
 }
+
+function showBrowseScreen({navigation}){
+  return (
+      <View style={styles.container}>
+        <BrowseReportsScreen/>
+      </View>
+  );
+}
+
+function showReportScreen({navigation}) {
+  return(
+      <View style={styles.container}>
+        <ReportScreen/>
+      </View>
+  );
+}
+
+function showHomeScreen({ navigation }) {
+  return (
+      <View style={styles.container}>
+        <Button title={'Publish a report'}
+                onPress={() => navigation.navigate('Publish Report')}
+        />
+        <Button title={'Browse reports'} onPress={() => navigation.navigate('Browse Reports')} />
+        <Button title={'Preferences'} onPress={() => navigation.navigate('Preferences')} />
+        <Button title={'Back to launch screen'} onPress={() => navigation.navigate('Project DD')} />
+      </View>
+  );
+}
+
+function ShowSplashScreen({ navigation }) {
+  return (
+      <View style={styles.container}>
+        <Text>Project DD</Text>
+        <Button
+            title="Go Home"
+            onPress={() => navigation.navigate('Home')}
+        />
+      </View>
+  );
+}
+
+const Stack = createStackNavigator();
+
+function App() {
+
+  return (
+      <NavigationContainer>
+          <Stack.Navigator initialRouteName="Project DD">
+            <Stack.Screen name={"Project DD"} component={ShowSplashScreen}/>
+            <Stack.Screen name={"Home"} component={showHomeScreen}/>
+            <Stack.Screen name={"Publish Report"} component={showReportScreen}/>
+            <Stack.Screen name={"Browse Reports"} component={showBrowseScreen}/>
+            <Stack.Screen name={"Preferences"} component={showPreferences}/>
+          </Stack.Navigator>
+      </NavigationContainer>
+  );
+}
+
+export default App;
+
+
 
 const styles = StyleSheet.create({
   container: {
