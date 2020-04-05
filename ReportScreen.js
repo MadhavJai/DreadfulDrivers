@@ -11,6 +11,8 @@ import {
   AppRegistry,
 } from 'react-native';
 
+import ImagePicker from 'react-native-image-crop-picker';
+
 export default ({}) => (
   <View>
     <Text style={styles.title}>Publish Report</Text>
@@ -66,11 +68,13 @@ export default ({}) => (
       <Button
         color="#129b3c"
         title="Publish Report"
-        onPress={() => this.capture()}
+        //onPress={() => this.capture()}
       />
     </View>
   </View>
 );
+
+
 
 const styles = StyleSheet.create({
   title: {
