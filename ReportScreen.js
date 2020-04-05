@@ -33,7 +33,11 @@ export default class ReportScreen extends React.Component {
         <Text style={styles.title}>Publish Report</Text>
         <View style={styles.sameLine}>
           <Text>Title of Incident</Text>
-          <TextInput>Input Title Here</TextInput>
+          <TextInput
+            placeholder="Enter Title"
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({title: text})}
+          />
         </View>
         <View style={styles.sameLine}>
           <Text>Location</Text>
@@ -90,7 +94,7 @@ export default class ReportScreen extends React.Component {
           <Button
             color="#129b3c"
             title="Publish Report"
-            onPress={() => publish()}
+            onPress={() => this.publish()}
           />
         </View>
       </View>
@@ -116,7 +120,9 @@ export default class ReportScreen extends React.Component {
     this.setState({imgPath: null});
   };
   publish = () => {
-    Alert.alert('Publish Called');
+    Alert.alert('Publish Called YEET');
+    console.log("test");
+    console.log(this.state.title);
   };
 }
 
