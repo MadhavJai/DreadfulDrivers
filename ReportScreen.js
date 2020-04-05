@@ -22,7 +22,7 @@ export default class ReportScreen extends React.Component {
       model: null,
       color: null,
       plateNumber: null,
-      timeofEvent: null,
+      dateofEvent: null,
       imgPath: null,
     };
   }
@@ -41,27 +41,47 @@ export default class ReportScreen extends React.Component {
         </View>
         <View style={styles.sameLine}>
           <Text>Location</Text>
-          <TextInput>Geolocation Here</TextInput>
+          <TextInput
+            placeholder="Enter Location (will be replaced with geolocation)"
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({location: text})}
+          />
         </View>
         <View style={styles.centerText}>
           <Text>Vehicle Info</Text>
         </View>
         <View style={styles.sameLine}>
           <Text>Model: </Text>
-          <TextInput>Model Here</TextInput>
+          <TextInput
+            placeholder="Enter Vehicle Model"
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({model: text})}
+          />
         </View>
         <View style={styles.sameLine}>
           <Text>Color: </Text>
-          <TextInput>Color Here</TextInput>
+          <TextInput
+            placeholder="Enter Vehicle Color"
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({color: text})}
+          />
         </View>
         <View style={styles.sameLine}>
           <Text>Licence Plate: </Text>
-          <TextInput>Plate Number Here</TextInput>
+          <TextInput
+            placeholder="Enter License Plate"
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({plateNumber: text})}
+          />
         </View>
 
         <View style={styles.sameLine}>
-          <Text>Time of event: </Text>
-          <TextInput>Time using datepicker here</TextInput>
+          <Text>Date of Event: </Text>
+          <TextInput
+            placeholder="Enter Time (will be replaced with datepicker)"
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({dateofEvent: text})}
+          />
         </View>
 
         <View style={styles.sameLine}>
@@ -121,8 +141,21 @@ export default class ReportScreen extends React.Component {
   };
   publish = () => {
     Alert.alert('Publish Called YEET');
-    console.log("test");
-    console.log(this.state.title);
+    console.log('test');
+    var title = this.state.title;
+    var location = this.state.location;
+    var model = this.state.model;
+    var color = this.state.color;
+    var plateNumber = this.state.plateNumber;
+    var date = this.state.dateofEvent;
+    var img = this.state.imgPath;
+    console.log('title : ' + title);
+    console.log('location : ' + location);
+    console.log('model : ' + model);
+    console.log('color : ' + color);
+    console.log('plate number : ' + plateNumber);
+    console.log('date : ' + date);
+    console.log('image data : ' + img);
   };
 }
 
