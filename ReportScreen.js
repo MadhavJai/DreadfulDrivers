@@ -85,7 +85,7 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.sameLine}>
-          <Text>Take Picture: </Text>
+          <Text>Picture of Driver: </Text>
           <Button
             color="#129b3c"
             title="Take Picture"
@@ -149,13 +149,15 @@ export default class ReportScreen extends React.Component {
     var plateNumber = this.state.plateNumber;
     var date = this.state.dateofEvent;
     var img = this.state.imgPath;
-    console.log('title : ' + title);
-    console.log('location : ' + location);
-    console.log('model : ' + model);
-    console.log('color : ' + color);
-    console.log('plate number : ' + plateNumber);
-    console.log('date : ' + date);
-    console.log('image data : ' + img);
+
+    var report = {title, location, model, color, plateNumber, date, img};
+    console.log('title : ' + report.title);
+    console.log('location : ' + report.location);
+    console.log('model : ' + report.model);
+    console.log('color : ' + report.color);
+    console.log('plate number : ' + report.plateNumber);
+    console.log('date : ' + report.date);
+    console.log('image data : ' + report.img);
   };
 }
 
