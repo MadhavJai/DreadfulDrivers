@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "462056442803",
+    "firebase_url": "https://projectdd-3ed39.firebaseio.com",
+    "project_id": "projectdd-3ed39",
+    "storage_bucket": "projectdd-3ed39.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:462056442803:android:319a3bdc0c63418f8599c6",
+        "android_client_info": {
+          "package_name": "com.dreadfuldrivers"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "462056442803-k5r9cjd7uihkrl24fep95v9o125ii9qd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCFIVkwC-A-i4uPgY2P4neETQgy-vHmQU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "462056442803-k5r9cjd7uihkrl24fep95v9o125ii9qd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
