@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-crop-picker';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 export default class ReportScreen extends React.Component {
   constructor(props) {
@@ -140,7 +141,7 @@ export default class ReportScreen extends React.Component {
     this.setState({imgPath: null});
   };
   publish = () => {
-    Alert.alert('Publish Called YEET');
+    Alert.alert('Publish Called');
     console.log('test');
     var title = this.state.title;
     var location = this.state.location;
