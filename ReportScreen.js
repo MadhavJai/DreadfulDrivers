@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-crop-picker';
-import DateTimePicker from '@react-native-community/datetimepicker';
+import DatePicker from 'react-native-datepicker';
 
 export default class ReportScreen extends React.Component {
   constructor(props) {
@@ -24,11 +24,13 @@ export default class ReportScreen extends React.Component {
       color: null,
       plateNumber: null,
       dateofEvent: null,
+      date: '',
       imgPath: null,
     };
   }
 
   render() {
+    const {date} = this.state;
     return (
       <View>
         <Text style={styles.title}>Publish Report</Text>
@@ -78,10 +80,30 @@ export default class ReportScreen extends React.Component {
 
         <View style={styles.sameLine}>
           <Text>Date of Event: </Text>
-          <TextInput
-            placeholder="Enter Time (will be replaced with datepicker)"
-            returnKeyLabel={'next'}
-            onChangeText={text => this.setState({dateofEvent: text})}
+          <DatePicker
+            style={{width: 200}}
+            date={this.state.date}
+            mode="date"
+            placeholder="select date"
+            format="YYYY-MM-DD"
+            minDate="2016-05-01"
+            confirmBtnText="Confirm"
+            cancelBtnText="Cancel"
+            customStyles={{
+              dateIcon: {
+                position: 'absolute',
+                left: 0,
+                top: 4,
+                marginLeft: 0,
+              },
+              dateInput: {
+                marginLeft: 36,
+              },
+              // ... You can check the source to find the other keys.
+            }}
+            onDateChange={date => {
+              this.setState({date: date});
+            }}
           />
         </View>
 
@@ -148,7 +170,7 @@ export default class ReportScreen extends React.Component {
     var model = this.state.model;
     var color = this.state.color;
     var plateNumber = this.state.plateNumber;
-    var date = this.state.dateofEvent;
+    var date = this.state.date;
     var img = this.state.imgPath;
 
     var report = {title, location, model, color, plateNumber, date, img};
