@@ -149,16 +149,15 @@ export default class ReportScreen extends React.Component {
   }
 
   getLocation = () => {
-    Geocoder.init("AIzaSyDk3EBrtcZ2uZ59GE0caWluEqZTojABhTU");
-    Geocoder.from(41.89, 12.49)
-        .then(json => {
-          var addressComponent = json.results[0].address_components[0];
-          console.log(addressComponent);
-          Alert.alert(addressComponent);
-        })
-        .catch(error =>
-          console.warn(error)
-        );
+    // navigator.geolocation.getCurrentPosition(
+    //     position => {
+    //       const location = JSON.stringify(position);
+    //       Alert.alert("Location", location);
+    //       // this.setState({ location });
+    //     },
+    //     error => Alert.alert(error.message, 'something wrong happened'),
+    //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
+    // );
   }
 
   capture = () => {
