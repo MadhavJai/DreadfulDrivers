@@ -13,6 +13,7 @@ import {
 
 import ImagePicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-datepicker';
+import Geocoder from 'react-native-geocoding';
 
 export default class ReportScreen extends React.Component {
   constructor(props) {
@@ -49,6 +50,9 @@ export default class ReportScreen extends React.Component {
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({location: text})}
           />
+          <Button
+              title={"Get location"}
+          onPress={() => this.getLocation()}/>
         </View>
         <View style={styles.centerText}>
           <Text>Vehicle Info</Text>
@@ -142,6 +146,19 @@ export default class ReportScreen extends React.Component {
         </View>
       </View>
     );
+  }
+
+  getLocation = () => {
+    Geocoder.init("AIzaSyDk3EBrtcZ2uZ59GE0caWluEqZTojABhTU");
+    Geocoder.from(41.89, 12.49)
+        .then(json => {
+          var addressComponent = json.results[0].address_components[0];
+          console.log(addressComponent);
+          Alert.alert(addressComponent);
+        })
+        .catch(error =>
+          console.warn(error)
+        );
   }
 
   capture = () => {
