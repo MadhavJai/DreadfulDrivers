@@ -86,23 +86,6 @@ function showSplashScreen({ navigation }) {
 
 const Stack = createStackNavigator();
 
-// function App() {
-//
-//   return (
-//       <NavigationContainer>
-//           <Stack.Navigator initialRouteName="Project DD">
-//             <Stack.Screen name={"Project DD"} component={ShowSplashScreen}/>
-//             <Stack.Screen name={"Home"} component={showHomeScreen}/>
-//             <Stack.Screen name={"Publish Report"} component={showReportScreen}/>
-//             <Stack.Screen name={"Browse Reports"} component={showBrowseScreen}/>
-//             <Stack.Screen name={"Preferences"} component={showPreferences}/>
-//           </Stack.Navigator>
-//       </NavigationContainer>
-//   );
-// }
-
-// export default App;
-
 export default class App extends React.Component {
     constructor(props) {
         super(props);
