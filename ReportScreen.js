@@ -15,6 +15,9 @@ import ImagePicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-datepicker';
 import Geocoder from 'react-native-geocoding';
 
+
+var tempArray = [];
+
 export default class ReportScreen extends React.Component {
   constructor(props) {
     super(props);
@@ -27,6 +30,7 @@ export default class ReportScreen extends React.Component {
       dateofEvent: null,
       date: '',
       imgPath: null,
+      reportArray: null,
     };
   }
 
@@ -180,7 +184,6 @@ export default class ReportScreen extends React.Component {
   };
   publish = () => {
     Alert.alert('Publish Called');
-    console.log('test');
     var title = this.state.title;
     var location = this.state.location;
     var model = this.state.model;
@@ -188,8 +191,11 @@ export default class ReportScreen extends React.Component {
     var plateNumber = this.state.plateNumber;
     var date = this.state.date;
     var img = this.state.imgPath;
-
-    var report = {title, location, model, color, plateNumber, date, img};
+    const report = {title, location, model, color, plateNumber, date, img};
+    tempArray.push(report);
+    this.setState({
+      reportArray: JSON.stringify(tempArray),
+    });
     console.log('title : ' + report.title);
     console.log('location : ' + report.location);
     console.log('model : ' + report.model);
@@ -197,6 +203,9 @@ export default class ReportScreen extends React.Component {
     console.log('plate number : ' + report.plateNumber);
     console.log('date : ' + report.date);
     console.log('image data : ' + report.img);
+    console.log('report array: ' + JSON.stringify(tempArray));
+    console.log('report array: ' + this.state.reportArray);
+    Alert.alert("Array of reports", JSON.stringify(tempArray));
   };
 }
 
