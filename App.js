@@ -33,6 +33,7 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ReportScreen from './ReportScreen';
 import BrowseReportsScreen from './BrowseReportsScreen';
 import PreferencesScreen from './PreferencesScreen';
+import SplashScreen from "./SplashScreen";
 
 function showPreferences({navigation}){
   return (
@@ -71,7 +72,7 @@ function showHomeScreen({ navigation }) {
   );
 }
 
-function ShowSplashScreen({ navigation }) {
+function showSplashScreen({ navigation }) {
   return (
       <View style={styles.container}>
         <Text>Project DD</Text>
@@ -85,22 +86,66 @@ function ShowSplashScreen({ navigation }) {
 
 const Stack = createStackNavigator();
 
-function App() {
+// function App() {
+//
+//   return (
+//       <NavigationContainer>
+//           <Stack.Navigator initialRouteName="Project DD">
+//             <Stack.Screen name={"Project DD"} component={ShowSplashScreen}/>
+//             <Stack.Screen name={"Home"} component={showHomeScreen}/>
+//             <Stack.Screen name={"Publish Report"} component={showReportScreen}/>
+//             <Stack.Screen name={"Browse Reports"} component={showBrowseScreen}/>
+//             <Stack.Screen name={"Preferences"} component={showPreferences}/>
+//           </Stack.Navigator>
+//       </NavigationContainer>
+//   );
+// }
 
-  return (
-      <NavigationContainer>
-          <Stack.Navigator initialRouteName="Project DD">
-            <Stack.Screen name={"Project DD"} component={ShowSplashScreen}/>
-            <Stack.Screen name={"Home"} component={showHomeScreen}/>
-            <Stack.Screen name={"Publish Report"} component={showReportScreen}/>
-            <Stack.Screen name={"Browse Reports"} component={showBrowseScreen}/>
-            <Stack.Screen name={"Preferences"} component={showPreferences}/>
-          </Stack.Navigator>
-      </NavigationContainer>
-  );
+// export default App;
+
+export default class App extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            timePassed: false,
+        };
+    }
+
+    componentDidMount() {
+        setTimeout(() => {
+            this.setTimePassed();
+        }, 2000);
+    }
+
+    setTimePassed(){
+        this.setState({timePassed: true});
+        console.log("Bruh");
+    }
+
+    render(){
+        if(this.state.timePassed === false){
+            return(
+                <View style={styles.container}>
+                    <SplashScreen/>
+                </View>
+            );
+        }
+        else{
+            return(
+                <NavigationContainer>
+                    <Stack.Navigator initialRouteName="Home">
+                        <Stack.Screen name={"Project DD"} component={showSplashScreen}/>
+                        <Stack.Screen name={"Home"} component={showHomeScreen}/>
+                        <Stack.Screen name={"Publish Report"} component={showReportScreen}/>
+                        <Stack.Screen name={"Browse Reports"} component={showBrowseScreen}/>
+                        <Stack.Screen name={"Preferences"} component={showPreferences}/>
+                    </Stack.Navigator>
+                </NavigationContainer>
+            )
+        }
+    }
+
 }
-
-export default App;
 
 
 
