@@ -14,8 +14,8 @@ import {
 
 import ImagePicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-datepicker';
-import Geocoder from 'react-native-geocoding';
 import Geolocation from 'react-native-geolocation-service';
+import Geocoder from 'react-native-geocoding';
 
 var tempArray = [];
 
@@ -24,11 +24,11 @@ export default class ReportScreen extends React.Component {
     super(props);
     this.state = {
       title: null,
-      location: null,
+      longitude: null,
+      latitude: null,
       model: null,
       color: null,
       plateNumber: null,
-      dateofEvent: null,
       date: '',
       imgPath: null,
       reportArray: null,
@@ -38,11 +38,12 @@ export default class ReportScreen extends React.Component {
   render() {
     const {date} = this.state;
     return (
-      <View>
+      <View style={styles.container}>
         <Text style={styles.title}>Publish Report</Text>
-        <View style={styles.sameLine}>
+        <View style={styles.horizontal}>
           <Text>Title of Incident</Text>
           <TextInput
+            style={{height: 40}}
             placeholder="Enter Title"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({title: text})}
@@ -50,12 +51,11 @@ export default class ReportScreen extends React.Component {
         </View>
         <View style={styles.sameLine}>
           <Text>Location</Text>
-          <TextInput
-            placeholder="Enter Location (will be replaced with geolocation)"
-            returnKeyLabel={'next'}
-            onChangeText={text => this.setState({location: text})}
+          <Button
+            color="#073763"
+            title={'Get location'}
+            onPress={() => this.getLocation()}
           />
-          <Button title={'Get location'} onPress={() => this.getLocation()} />
         </View>
         <View style={styles.centerText}>
           <Text>Vehicle Info</Text>
@@ -117,12 +117,12 @@ export default class ReportScreen extends React.Component {
         <View style={styles.sameLine}>
           <Text>Picture of Driver: </Text>
           <Button
-            color="#129b3c"
+            color="#073763"
             title="Take Picture"
             onPress={() => this.capture()}
           />
           <Button
-            color="#009cc4"
+            color="#073763"
             title="Reset Picture"
             onPress={() => this.resetImage()}
           />
@@ -142,7 +142,7 @@ export default class ReportScreen extends React.Component {
 
         <View>
           <Button
-            color="#129b3c"
+            color="#073763"
             title="Publish Report"
             onPress={() => this.publish()}
           />
@@ -152,15 +152,24 @@ export default class ReportScreen extends React.Component {
   }
 
   getLocation = () => {
+    this.setState({longitude: null});
+    this.setState({latitude: null});
     Geolocation.getCurrentPosition(
       position => {
         console.log(position);
+        var latitude = JSON.stringify(position.coords.latitude);
+        var longitude = JSON.stringify(position.coords.longitude);
+        Alert.alert(
+          'Location Retrieved',
+          'longitude : ' + longitude + '\nlatitude : ' + latitude,
+        );
+        this.setState({longitude: longitude});
+        this.setState({latitude: latitude});
       },
       error => {
         // See error code charts below.
         console.log(error.code, error.message);
       },
-      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
     );
   };
 
@@ -185,19 +194,30 @@ export default class ReportScreen extends React.Component {
   publish = () => {
     Alert.alert('Publish Called');
     var title = this.state.title;
-    var location = this.state.location;
+    var longitude = this.state.longitude;
+    var latitude = this.state.latitude;
     var model = this.state.model;
     var color = this.state.color;
     var plateNumber = this.state.plateNumber;
     var date = this.state.date;
     var img = this.state.imgPath;
-    const report = {title, location, model, color, plateNumber, date, img};
+    const report = {
+      title,
+      longitude,
+      latitude,
+      model,
+      color,
+      plateNumber,
+      date,
+      img,
+    };
     tempArray.push(report);
     this.setState({
       reportArray: JSON.stringify(tempArray),
     });
     console.log('title : ' + report.title);
-    console.log('location : ' + report.location);
+    console.log('longitude : ' + report.longitude);
+    console.log('latitude : ' + report.latitude);
     console.log('model : ' + report.model);
     console.log('color : ' + report.color);
     console.log('plate number : ' + report.plateNumber);
@@ -219,6 +239,10 @@ const styles = StyleSheet.create({
     fontSize: 20,
     justifyContent: 'flex-start',
     textAlign: 'center',
+  },
+  horizontal: {
+    flexDirection: 'row',
+    marginTop: 25,
   },
   container: {
     flex: 1,
