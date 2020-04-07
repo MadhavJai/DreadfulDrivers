@@ -9,12 +9,13 @@ import {
   TouchableOpacity,
   Image,
   AppRegistry,
+  PermissionsAndroid,
 } from 'react-native';
 
 import ImagePicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-datepicker';
 import Geocoder from 'react-native-geocoding';
-
+import Geolocation from 'react-native-geolocation-service';
 
 var tempArray = [];
 
@@ -54,9 +55,7 @@ export default class ReportScreen extends React.Component {
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({location: text})}
           />
-          <Button
-              title={"Get location"}
-          onPress={() => this.getLocation()}/>
+          <Button title={'Get location'} onPress={() => this.getLocation()} />
         </View>
         <View style={styles.centerText}>
           <Text>Vehicle Info</Text>
@@ -153,16 +152,17 @@ export default class ReportScreen extends React.Component {
   }
 
   getLocation = () => {
-    // navigator.geolocation.getCurrentPosition(
-    //     position => {
-    //       const location = JSON.stringify(position);
-    //       Alert.alert("Location", location);
-    //       // this.setState({ location });
-    //     },
-    //     error => Alert.alert(error.message, 'something wrong happened'),
-    //     { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 }
-    // );
-  }
+    Geolocation.getCurrentPosition(
+      position => {
+        console.log(position);
+      },
+      error => {
+        // See error code charts below.
+        console.log(error.code, error.message);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    );
+  };
 
   capture = () => {
     ImagePicker.openCamera({
@@ -205,7 +205,7 @@ export default class ReportScreen extends React.Component {
     console.log('image data : ' + report.img);
     console.log('report array: ' + JSON.stringify(tempArray));
     console.log('report array: ' + this.state.reportArray);
-    Alert.alert("Array of reports", JSON.stringify(tempArray));
+    Alert.alert('Array of reports', JSON.stringify(tempArray));
   };
 }
 
