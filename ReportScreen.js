@@ -12,12 +12,15 @@ import {
   PermissionsAndroid,
 } from 'react-native';
 
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 import ImagePicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-datepicker';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 
-var tempArray = [];
+const tempArray = [];
+
 
 export default class ReportScreen extends React.Component {
   constructor(props) {
@@ -34,6 +37,7 @@ export default class ReportScreen extends React.Component {
       reportArray: null,
     };
   }
+
 
   render() {
     const {date} = this.state;
@@ -140,16 +144,23 @@ export default class ReportScreen extends React.Component {
           />
         </View>
 
-        <View>
+        <View style={styles.sameLine}>
           <Button
-            color="#073763"
-            title="Publish Report"
-            onPress={() => this.publish()}
+              color="#073763"
+              title="Go back"
+              onPress={() => 5}
+          />
+          <Button
+              color="#073763"
+              title="Publish Report"
+              onPress={() => this.publish()}
           />
         </View>
       </View>
     );
   }
+
+
 
   getLocation = async () => {
     try {
@@ -212,7 +223,6 @@ export default class ReportScreen extends React.Component {
     this.setState({
       reportArray: null,
     });
-    tempArray = [];
     var title = this.state.title;
     var longitude = this.state.longitude;
     var latitude = this.state.latitude;

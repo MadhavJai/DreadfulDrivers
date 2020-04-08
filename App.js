@@ -45,17 +45,15 @@ function showPreferences({navigation}){
 
 function showBrowseScreen({navigation}){
   return (
-      <View style={styles.container}>
-        <BrowseReportsScreen/>
-      </View>
+      <BrowseReportsScreen/>
   );
 }
 
-function showReportScreen({navigation}) {
+function showReportScreen({navigation, route}) {
   return(
-      <View style={styles.container}>
+      // <View style={styles.container}>
         <ReportScreen/>
-      </View>
+      // </View>
   );
 }
 
