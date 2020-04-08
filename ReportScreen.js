@@ -151,26 +151,42 @@ export default class ReportScreen extends React.Component {
     );
   }
 
-  getLocation = () => {
-    this.setState({longitude: null});
-    this.setState({latitude: null});
-    Geolocation.getCurrentPosition(
-      position => {
-        console.log(position);
-        var latitude = JSON.stringify(position.coords.latitude);
-        var longitude = JSON.stringify(position.coords.longitude);
-        Alert.alert(
-          'Location Retrieved',
-          'longitude : ' + longitude + '\nlatitude : ' + latitude,
+  getLocation = async () => {
+    try {
+      var granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
+        {
+          title: 'Allow Location Usage?',
+          message: 'Dreadful Drivers needs access to your location ',
+          buttonNegative: 'Cancel',
+          buttonPositive: 'OK',
+        },
+      );
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("Location permission granted!");
+        await Geolocation.getCurrentPosition(
+          position => {
+            console.log(position);
+            var latitude = JSON.stringify(position.coords.latitude);
+            var longitude = JSON.stringify(position.coords.longitude);
+            Alert.alert(
+              'Location Retrieved',
+              'latitude : ' + latitude + '\nlongitude : ' + longitude,
+            );
+            this.setState({longitude: longitude});
+            this.setState({latitude: latitude});
+          },
+          error => {
+            // See error code charts below.
+            console.log(error.code, error.message);
+          },
         );
-        this.setState({longitude: longitude});
-        this.setState({latitude: latitude});
-      },
-      error => {
-        // See error code charts below.
-        console.log(error.code, error.message);
-      },
-    );
+      } else {
+        console.log('Location permission denied');
+      }
+    } catch (err) {
+      console.warn(err);
+    }
   };
 
   capture = () => {
@@ -188,11 +204,15 @@ export default class ReportScreen extends React.Component {
         Alert.alert('Camera Error', 'Error: "No Image Selected" ');
       });
   };
+
   resetImage = () => {
     this.setState({imgPath: null});
   };
   publish = () => {
-    Alert.alert('Publish Called');
+    this.setState({
+      reportArray: null,
+    });
+    tempArray = [];
     var title = this.state.title;
     var longitude = this.state.longitude;
     var latitude = this.state.latitude;
@@ -201,10 +221,10 @@ export default class ReportScreen extends React.Component {
     var plateNumber = this.state.plateNumber;
     var date = this.state.date;
     var img = this.state.imgPath;
-    const report = {
+    var report = {
       title,
-      longitude,
       latitude,
+      longitude,
       model,
       color,
       plateNumber,
@@ -216,8 +236,8 @@ export default class ReportScreen extends React.Component {
       reportArray: JSON.stringify(tempArray),
     });
     console.log('title : ' + report.title);
-    console.log('longitude : ' + report.longitude);
     console.log('latitude : ' + report.latitude);
+    console.log('longitude : ' + report.longitude);
     console.log('model : ' + report.model);
     console.log('color : ' + report.color);
     console.log('plate number : ' + report.plateNumber);
