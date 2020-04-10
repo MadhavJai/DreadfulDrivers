@@ -18,11 +18,35 @@ import ImagePicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-datepicker';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
+import * as firebase from 'firebase';
 
 const tempArray = [];
 
-
 export default class ReportScreen extends React.Component {
+  componentWillMount() {
+    const firebaseConfig = {
+      apiKey: 'AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc',
+      authDomain: 'dreadful-drivers.firebaseapp.com',
+      databaseURL: 'https://dreadful-drivers.firebaseio.com',
+      projectId: 'dreadful-drivers',
+      storageBucket: 'dreadful-drivers.appspot.com',
+      messagingSenderId: '964121662431',
+      appId: '1:964121662431:web:aef498d93e4d26633aea6a',
+      measurementId: 'G-2M8NRQYE2T',
+    };
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+
+    firebase
+      .database()
+      .ref('users/001')
+      .set({
+        name: 'test',
+        age: 21,
+      });
+  }
+
   constructor(props) {
     super(props);
     this.state = {
@@ -37,7 +61,6 @@ export default class ReportScreen extends React.Component {
       reportArray: null,
     };
   }
-
 
   render() {
     const {date} = this.state;
@@ -145,26 +168,20 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.sameLine}>
+          <Button color="#073763" title="Go back" onPress={() => 5} />
           <Button
-              color="#073763"
-              title="Go back"
-              onPress={() => 5}
-          />
-          <Button
-              color="#073763"
-              title="Publish Report"
-              onPress={() => this.publish()}
+            color="#073763"
+            title="Publish Report"
+            onPress={() => this.publish()}
           />
         </View>
       </View>
     );
   }
 
-
-
   getLocation = async () => {
     try {
-      var granted = await PermissionsAndroid.request(
+      const granted = await PermissionsAndroid.request(
         PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
         {
           title: 'Allow Location Usage?',
@@ -174,7 +191,7 @@ export default class ReportScreen extends React.Component {
         },
       );
       if (granted === PermissionsAndroid.RESULTS.GRANTED) {
-        console.log("Location permission granted!");
+        console.log('Location permission granted!');
         await Geolocation.getCurrentPosition(
           position => {
             console.log(position);
@@ -256,6 +273,13 @@ export default class ReportScreen extends React.Component {
     console.log('report array: ' + JSON.stringify(tempArray));
     console.log('report array: ' + this.state.reportArray);
     Alert.alert('Array of reports', JSON.stringify(tempArray));
+
+    firebase
+      .database()
+      .ref('data')
+      .set({
+        report,
+      });
   };
 }
 
