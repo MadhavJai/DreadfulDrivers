@@ -51,8 +51,10 @@ export default class ReportScreen extends React.Component {
     super(props);
     this.state = {
       title: null,
+      description: null,
       longitude: null,
       latitude: null,
+      location: null,
       model: null,
       color: null,
       plateNumber: null,
@@ -68,44 +70,63 @@ export default class ReportScreen extends React.Component {
       <View style={styles.container}>
         <Text style={styles.title}>Publish Report</Text>
         <View style={styles.horizontal}>
-          <Text>Title of Incident</Text>
+          <Text style={{paddingTop: 6}}>Title of Incident: </Text>
           <TextInput
-            style={{height: 40}}
+            style={{height: 35}}
             placeholder="Enter Title"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({title: text})}
           />
         </View>
+        <View style={styles.horizontal}>
+          <Text style={{paddingTop: 6}}>Description: </Text>
+          <TextInput
+            style={{height:35,marginTop: 0}}
+            placeholder={"Enter description"}
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({description: text})}
+          />
+        </View>
         <View style={styles.sameLine}>
-          <Text>Location</Text>
+          <Text style={{paddingTop: 6}}>Location </Text>
+          <TextInput
+              style={{height:35,marginTop: 0}}
+              placeholder={"Enter location"}
+              returnKeyLabel={'next'}
+              onChangeText={text => this.setState({location: text})}
+          />
+          <Text style={{paddingTop: 6}}> Or   </Text>
           <Button
             color="#073763"
             title={'Get location'}
             onPress={() => this.getLocation()}
           />
+
         </View>
         <View style={styles.centerText}>
-          <Text>Vehicle Info</Text>
+          <Text style={{marginVertical: 10, fontSize: 18}}>Vehicle Info</Text>
         </View>
         <View style={styles.sameLine}>
-          <Text>Model: </Text>
-          <TextInput
+          <Text  style={{paddingTop: 6}}>Model: </Text>
+          <TextInput style={{height:35,marginTop: 0}}
             placeholder="Enter Vehicle Model"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({model: text})}
           />
         </View>
         <View style={styles.sameLine}>
-          <Text>Color: </Text>
+          <Text style={{paddingTop: 6}}>Color: </Text>
           <TextInput
+              style={{height:35,marginTop: 0}}
             placeholder="Enter Vehicle Color"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({color: text})}
           />
         </View>
         <View style={styles.sameLine}>
-          <Text>Licence Plate: </Text>
+          <Text style={{paddingTop: 6}}>Licence Plate: </Text>
           <TextInput
+              style={{height:35,marginTop: 0}}
             placeholder="Enter License Plate"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({plateNumber: text})}
@@ -113,9 +134,9 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.sameLine}>
-          <Text>Date of Event: </Text>
+          <Text style={{paddingTop: 6}}>Date of Event: </Text>
           <DatePicker
-            style={{width: 200}}
+            style={{width: 200, marginBottom: 15}}
             date={this.state.date}
             mode="date"
             placeholder="select date"
@@ -142,8 +163,9 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.sameLine}>
-          <Text>Picture of Driver: </Text>
+          <Text style={{paddingTop: 6}}>Picture of Driver: </Text>
           <Button
+              style={{marginRight: 5}}
             color="#073763"
             title="Take Picture"
             onPress={() => this.capture()}
@@ -158,10 +180,10 @@ export default class ReportScreen extends React.Component {
           <Image
             key={this.state.imgPath}
             style={{
-              width: 100,
-              height: 100,
-              marginTop: 25,
-              marginBottom: 25,
+              width: 50,
+              height: 50,
+              marginTop: 5,
+              marginBottom: 5,
             }}
             source={{uri: this.state.imgPath}}
           />
