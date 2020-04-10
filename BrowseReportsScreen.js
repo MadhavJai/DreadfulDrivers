@@ -12,23 +12,36 @@ import{
     PermissionsAndroid,
     FlatList,
 } from 'react-native';
+import * as firebase from 'firebase';
 
-
-const listData = [{ "id": 1,"title":"accident 1","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"vugcvig","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 2,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 3,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 4,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 5,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 6,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 7,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 8,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 9,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 10,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 11,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 12,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},
-    {"id": 13,"title":"accident 2","latitude":"43.4941585","longitude":"-79.8709291","model":"8yv","color":"blue","plateNumber":"7tc","date":"2020-04-18","img":null},];
-
+const reportArray = [];
 export default class BrowseScreen extends React.Component {
+    componentWillMount() {
+        const firebaseConfig = {
+            apiKey: 'AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc',
+            authDomain: 'dreadful-drivers.firebaseapp.com',
+            databaseURL: 'https://dreadful-drivers.firebaseio.com',
+            projectId: 'dreadful-drivers',
+            storageBucket: 'dreadful-drivers.appspot.com',
+            messagingSenderId: '964121662431',
+            appId: '1:964121662431:web:aef498d93e4d26633aea6a',
+            measurementId: 'G-2M8NRQYE2T',
+        };
+        if (!firebase.apps.length) {
+            firebase.initializeApp(firebaseConfig);
+        }
+
+        firebase.database().ref('data').once('value', snapshot => {
+            snapshot.forEach(childSnapshot => {
+                var reportKey = childSnapshot.key;
+                var reportData = childSnapshot.val();
+                reportArray.push(reportData);
+                console.log(JSON.stringify(reportKey));
+                console.log(JSON.stringify(reportData));
+                console.log(JSON.stringify(reportArray));
+            })
+        })
+    }
 
     render() {
 
@@ -36,10 +49,10 @@ export default class BrowseScreen extends React.Component {
             <View style={styles.container}>
                 <FlatList
                     numColumns={1}
-                    data={listData}
+                    data={reportArray}
                     renderItem={({ item }) => (
                         <View style={styles.item}>
-                            <Text  style={styles.title}>{item.id.toString()}. {item.title}</Text>
+                            <Text  style={styles.title}> {item.title}</Text>
                             <Text style={styles.subTitle}>{item.date}</Text>
                         </View>
                     )}

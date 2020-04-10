@@ -60,7 +60,6 @@ export default class ReportScreen extends React.Component {
       plateNumber: null,
       date: '',
       imgPath: null,
-      reportArray: null,
     };
   }
 
@@ -263,8 +262,10 @@ export default class ReportScreen extends React.Component {
       reportArray: null,
     });
     var title = this.state.title;
+    var desc = this.state.description;
     var longitude = this.state.longitude;
     var latitude = this.state.latitude;
+    var location = this.state.location;
     var model = this.state.model;
     var color = this.state.color;
     var plateNumber = this.state.plateNumber;
@@ -272,8 +273,10 @@ export default class ReportScreen extends React.Component {
     var img = this.state.imgPath;
     var report = {
       title,
+      desc,
       latitude,
       longitude,
+      location,
       model,
       color,
       plateNumber,
@@ -281,24 +284,30 @@ export default class ReportScreen extends React.Component {
       img,
     };
     tempArray.push(report);
-    this.setState({
-      reportArray: JSON.stringify(tempArray),
-    });
     console.log('title : ' + report.title);
+    console.log('desc : ' + report.desc);
     console.log('latitude : ' + report.latitude);
     console.log('longitude : ' + report.longitude);
+    console.log('location : ' + report.location);
     console.log('model : ' + report.model);
     console.log('color : ' + report.color);
     console.log('plate number : ' + report.plateNumber);
     console.log('date : ' + report.date);
     console.log('image data : ' + report.img);
     console.log('report array: ' + JSON.stringify(tempArray));
-    console.log('report array: ' + this.state.reportArray);
-    Alert.alert('Array of reports', JSON.stringify(tempArray));
 
     var dataRef = firebase.database().ref('data'); // .push({report});
     dataRef.push().set({
-      report,
+      title: report.title,
+      desc: report.desc,
+      latitude: report.latitude,
+      longitude: report.longitude,
+      location: report.location,
+      model: report.model,
+      color: report.color,
+      plateNumber: report.plateNumber,
+      date: report.date,
+      image: report.img
     });
 
     // firebase
