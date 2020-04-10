@@ -38,13 +38,13 @@ export default class ReportScreen extends React.Component {
       firebase.initializeApp(firebaseConfig);
     }
 
-    firebase
-      .database()
-      .ref('users/001')
-      .set({
-        name: 'test',
-        age: 21,
-      });
+    // firebase
+    //   .database()
+    //   .ref('users/001')
+    //   .set({
+    //     name: 'test',
+    //     age: 21,
+    //   });
   }
 
   constructor(props) {
@@ -274,12 +274,17 @@ export default class ReportScreen extends React.Component {
     console.log('report array: ' + this.state.reportArray);
     Alert.alert('Array of reports', JSON.stringify(tempArray));
 
-    firebase
-      .database()
-      .ref('data')
-      .set({
-        report,
-      });
+    var dataRef = firebase.database().ref('data'); // .push({report});
+    dataRef.push().set({
+      report,
+    });
+
+    // firebase
+    //   .database()
+    //   .ref('data')
+    //   .push({
+    //     report,
+    //   });
   };
 }
 
