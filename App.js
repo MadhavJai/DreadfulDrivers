@@ -60,6 +60,7 @@ function showReportScreen({navigation, route}) {
 function showHomeScreen({navigation}) {
   return (
     <View style={styles.container}>
+      <Text>Dreadful Drivers</Text>
       <Image
         style={{
           width: 500,
