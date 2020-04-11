@@ -13,6 +13,8 @@ import{
     FlatList,
 } from 'react-native';
 import * as firebase from 'firebase';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
 
 var reportArray = [];
 
@@ -48,22 +50,27 @@ export default class BrowseScreen extends React.Component {
     render() {
         console.log(JSON.stringify(reportArray));
         return (
-            <View style={styles.container}>
+            // <View style={styles.container}>
                 <FlatList
                     numColumns={1}
                     data={reportArray}
                     renderItem={({ item, index }) => (
-                        <View style={styles.item}>
-                            <Text  style={styles.title}>{item.idNum + 1}. {item.title}</Text>
-                            <Text style={styles.subTitle}>{item.date}</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => this.selectReport()}>
+                            <View style={styles.item}>
+                                <Text  style={styles.title}>{item.idNum + 1}. {item.title}</Text>
+                                <Text style={styles.subTitle}>{item.date}</Text>
+                            </View>
+                        </TouchableOpacity>
+
                     )}
                     keyExtractor={item => item.idNum}
                 />
-            </View>
+            // </View>
         );
+    }
 
-
+    selectReport = () => {
+        Alert.alert("Clicked");
     }
 }
 
