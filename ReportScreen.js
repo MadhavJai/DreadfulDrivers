@@ -132,7 +132,7 @@ export default class ReportScreen extends React.Component {
 
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Date of Event: </Text>
+          <Text style={{paddingTop: 6}}>Date of Event:              </Text>
           <DatePicker
             style={{width: 200, marginBottom: 15}}
             date={this.state.date}
@@ -195,6 +195,7 @@ export default class ReportScreen extends React.Component {
             onPress={() => this.publish()}
           />
         </View>
+        <Text style={styles.importantText}>* Required Fields</Text>
       </View>
     );
   }
@@ -361,6 +362,12 @@ export default class ReportScreen extends React.Component {
           upvotes: report.upvotes,
         });
       }, 5000);
+    }
+    else{
+      Alert.alert(
+          'Error : Missing Fields',
+          missingFields,
+      );
     }
   };
 }
