@@ -64,9 +64,9 @@ export default class ReportScreen extends React.Component {
         <Text style={styles.title}>Publish Report</Text>
         <View style={styles.horizontal}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Title of Incident: </Text>
+          <Text style={{paddingTop: 6}}>Title of Incident:                                          </Text>
           <TextInput
-            style={{height: 35}}
+            style={styles.input}
             placeholder="Enter Title"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({title: text})}
@@ -74,9 +74,9 @@ export default class ReportScreen extends React.Component {
         </View>
         <View style={styles.horizontal}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Description: </Text>
+          <Text style={{paddingTop: 6}}>Description:                                      </Text>
           <TextInput
-            style={{height: 35, marginTop: 0}}
+              style={styles.input}
             placeholder={'Enter description'}
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({description: text})}
@@ -84,9 +84,9 @@ export default class ReportScreen extends React.Component {
         </View>
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Location </Text>
+          <Text style={{paddingTop: 6}}>Location:            </Text>
           <TextInput
-            style={{height: 35, marginTop: 0}}
+              style={styles.input}
             placeholder={'Enter location'}
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({location: text})}
@@ -103,27 +103,27 @@ export default class ReportScreen extends React.Component {
         </View>
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Model: </Text>
+          <Text style={{paddingTop: 6}}>Model:                                          </Text>
           <TextInput
-            style={{height: 35, marginTop: 0}}
+              style={styles.input}
             placeholder="Enter Vehicle Model"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({model: text})}
           />
         </View>
         <View style={styles.sameLine}>
-          <Text style={{paddingTop: 6}}>Color: </Text>
+          <Text style={{paddingTop: 6}}>Color:                                            </Text>
           <TextInput
-            style={{height: 35, marginTop: 0}}
+              style={styles.input}
             placeholder="Enter Vehicle Color"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({color: text})}
           />
         </View>
         <View style={styles.sameLine}>
-          <Text style={{paddingTop: 6}}>Licence Plate: </Text>
+          <Text style={{paddingTop: 6}}>Licence Plate:                             </Text>
           <TextInput
-            style={{height: 35, marginTop: 0}}
+              style={styles.input}
             placeholder="Enter License Plate"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({plateNumber: text})}
@@ -132,7 +132,7 @@ export default class ReportScreen extends React.Component {
 
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Date of Event:              </Text>
+          <Text style={{paddingTop: 6}}>Date of Event:                 </Text>
           <DatePicker
             style={{width: 200, marginBottom: 15}}
             date={this.state.date}
@@ -178,8 +178,8 @@ export default class ReportScreen extends React.Component {
           <Image
             key={this.state.imgPath}
             style={{
-              width: 50,
-              height: 50,
+              width: 75,
+              height: 100,
               marginTop: 5,
               marginBottom: 5,
             }}
@@ -251,6 +251,7 @@ export default class ReportScreen extends React.Component {
       width: 300,
       height: 400,
       cropping: true,
+      includeBase64: true,
     })
       .then(image => {
         //once promise is met, sets imgPath state to the images path
@@ -362,6 +363,9 @@ export default class ReportScreen extends React.Component {
           upvotes: report.upvotes,
         });
       }, 5000);
+      Alert.alert(
+          'Succesfully Published Report!'
+      );
     }
     else{
       Alert.alert(
@@ -377,6 +381,7 @@ const styles = StyleSheet.create({
     fontSize: 30,
     justifyContent: 'flex-start',
     textAlign: 'center',
+    margin: 5,
   },
   subtitle: {
     fontSize: 20,
@@ -404,5 +409,11 @@ const styles = StyleSheet.create({
   importantText: {
     paddingTop: 6,
     color: '#ff0000',
+  },
+  input: {
+    margin: 5,
+    height: 40,
+    borderColor: '#073763',
+    borderWidth: 1,
   },
 });

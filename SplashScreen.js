@@ -3,6 +3,7 @@ import {View, Text, Button, Linking} from 'react-native';
 
 export default ({history}) => (
     <View>
-        <Text>Project DD</Text>
+        <Text>Dreadful Drivers</Text>
+        <Text>By: Arjun Suthaharan and Madhav Jaisankar</Text>
     </View>
 );

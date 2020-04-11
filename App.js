@@ -33,102 +33,123 @@ import {createStackNavigator} from '@react-navigation/stack';
 import ReportScreen from './ReportScreen';
 import BrowseReportsScreen from './BrowseReportsScreen';
 import PreferencesScreen from './PreferencesScreen';
-import SplashScreen from "./SplashScreen";
+import SplashScreen from './SplashScreen';
 
-function showPreferences({navigation}){
+function showPreferences({navigation}) {
   return (
-      <View style={styles.container}>
-        <PreferencesScreen/>
-      </View>
+    <View style={styles.container}>
+      <PreferencesScreen />
+    </View>
   );
 }
 
-function showBrowseScreen({navigation}){
-  return (
-      <BrowseReportsScreen/>
-  );
+function showBrowseScreen({navigation}) {
+  return <BrowseReportsScreen />;
 }
 
 function showReportScreen({navigation, route}) {
-  return(
-      // <View style={styles.container}>
-        <ReportScreen/>
-      // </View>
+  return (
+    // <View style={styles.container}>
+    <ReportScreen />
+    // </View>
   );
 }
 
-function showHomeScreen({ navigation }) {
+function showHomeScreen({navigation}) {
   return (
-      <View style={styles.container}>
-        <Button title={'Publish a report'}
-                onPress={() => navigation.navigate('Publish Report')}
-        />
-        <Button title={'Browse reports'} onPress={() => navigation.navigate('Browse Reports')} />
-        <Button title={'Preferences'} onPress={() => navigation.navigate('Preferences')} />
-        <Button title={'Back to launch screen'} onPress={() => navigation.navigate('Project DD')} />
-      </View>
-  );
-}
-
-function showSplashScreen({ navigation }) {
-  return (
-      <View style={styles.container}>
-        <Text>Project DD</Text>
+    <View style={styles.container}>
+      <View style={styles.seperator}>
         <Button
-            title="Go Home"
-            onPress={() => navigation.navigate('Home')}
+          style={styles.button}
+          color="#073763"
+          title={'Publish a report'}
+          onPress={() => navigation.navigate('Publish Report')}
         />
       </View>
+      <View style={styles.seperator}>
+        <Button
+          color="#073763"
+          title={'Browse reports'}
+          onPress={() => navigation.navigate('Browse Reports')}
+        />
+      </View>
+      <View style={styles.seperator}>
+        <Button
+          color="#073763"
+          style={styles.seperator}
+          title={'Preferences'}
+          onPress={() => navigation.navigate('Preferences')}
+        />
+      </View>
+      <View style={styles.seperator}>
+        <Button
+          color="#073763"
+          title={'Back to launch screen'}
+          onPress={() => navigation.navigate('Project DD')}
+        />
+      </View>
+    </View>
+  );
+}
+
+function showSplashScreen({navigation}) {
+  return (
+    <View style={styles.container}>
+      <Text>Project DD</Text>
+      <Button title="Go Home" onPress={() => navigation.navigate('Home')} />
+    </View>
   );
 }
 
 const Stack = createStackNavigator();
 
 export default class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            timePassed: false,
-        };
-    }
+  constructor(props) {
+    super(props);
+    this.state = {
+      timePassed: false,
+    };
+  }
 
-    componentDidMount() {
-        setTimeout(() => {
-            this.setTimePassed();
-        }, 2000);
-    }
+  componentDidMount() {
+    setTimeout(() => {
+      this.setTimePassed();
+    }, 2000);
+  }
 
-    setTimePassed(){
-        this.setState({timePassed: true});
-        console.log("Bruh");
-    }
+  setTimePassed() {
+    this.setState({timePassed: true});
+    console.log('Bruh');
+  }
 
-    render(){
-        if(this.state.timePassed === false){
-            return(
-                <View style={styles.container}>
-                    <SplashScreen/>
-                </View>
-            );
-        }
-        else{
-            return(
-                <NavigationContainer>
-                    <Stack.Navigator initialRouteName="Home">
-                        <Stack.Screen name={"Project DD"} component={showSplashScreen}/>
-                        <Stack.Screen name={"Home"} component={showHomeScreen}/>
-                        <Stack.Screen name={"Publish Report"} component={showReportScreen}/>
-                        <Stack.Screen name={"Browse Reports"} component={showBrowseScreen}/>
-                        <Stack.Screen name={"Preferences"} component={showPreferences}/>
-                    </Stack.Navigator>
-                </NavigationContainer>
-            )
-        }
+  render() {
+    if (this.state.timePassed === false) {
+      return (
+        <View style={styles.container}>
+          <SplashScreen />
+        </View>
+      );
+    } else {
+      return (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName="Home">
+            <Stack.Screen name={'Project DD'} component={showSplashScreen} />
+            <Stack.Screen name={'Home'} component={showHomeScreen} />
+            <Stack.Screen
+              name={'Publish Report'}
+              component={showReportScreen}
+            />
+            <Stack.Screen
+              name={'Browse Reports'}
+              component={showBrowseScreen}
+            />
+            <Stack.Screen name={'Preferences'} component={showPreferences} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      );
     }
-
+  }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -171,5 +192,13 @@ const styles = StyleSheet.create({
     padding: 4,
     paddingRight: 12,
     textAlign: 'right',
+  },
+  seperator: {
+    marginTop: 8,
+    marginBottom: 8,
+  },
+  button: {
+      flex: 1,
+      justifyContent: 'center',
   },
 });
