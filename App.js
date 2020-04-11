@@ -35,6 +35,7 @@ import BrowseReportsScreen from './BrowseReportsScreen';
 import PreferencesScreen from './PreferencesScreen';
 import SplashScreen from './SplashScreen';
 
+//console.disableYellowBox = true;
 function showPreferences({navigation}) {
   return (
     <View style={styles.container}>
@@ -198,7 +199,7 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   button: {
-      flex: 1,
-      justifyContent: 'center',
+    flex: 1,
+    justifyContent: 'center',
   },
 });

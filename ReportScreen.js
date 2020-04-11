@@ -61,27 +61,28 @@ export default class ReportScreen extends React.Component {
     const {date} = this.state;
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Publish Report</Text>
         <View style={styles.horizontal}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Title of Incident:                                          </Text>
-          <TextInput
-            style={styles.input}
+          <Text style={{paddingTop: 6}}>Title of Incident:</Text>
+
+        </View>
+        <TextInput
+            style={styles.descriptionInput}
             placeholder="Enter Title"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({title: text})}
-          />
-        </View>
+        />
         <View style={styles.horizontal}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Description:                                      </Text>
-          <TextInput
-              style={styles.input}
+          <Text style={{paddingTop: 6}}>Description</Text>
+
+        </View>
+        <TextInput
+            style={styles.descriptionInput}
             placeholder={'Enter description'}
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({description: text})}
-          />
-        </View>
+        />
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
           <Text style={{paddingTop: 6}}>Location:            </Text>
@@ -99,29 +100,27 @@ export default class ReportScreen extends React.Component {
           />
         </View>
         <View style={styles.centerText}>
-          <Text style={{marginVertical: 10, fontSize: 18}}>Vehicle Info</Text>
+          <Text style={{fontSize: 18}}>Vehicle Info</Text>
         </View>
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Model:                                          </Text>
+          <Text style={{paddingTop: 6}}>Model:</Text>
           <TextInput
               style={styles.input}
             placeholder="Enter Vehicle Model"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({model: text})}
           />
-        </View>
-        <View style={styles.sameLine}>
-          <Text style={{paddingTop: 6}}>Color:                                            </Text>
+          <Text style={{paddingTop: 6}}>Color:</Text>
           <TextInput
               style={styles.input}
-            placeholder="Enter Vehicle Color"
-            returnKeyLabel={'next'}
-            onChangeText={text => this.setState({color: text})}
+              placeholder="Enter Vehicle Color"
+              returnKeyLabel={'next'}
+              onChangeText={text => this.setState({color: text})}
           />
         </View>
         <View style={styles.sameLine}>
-          <Text style={{paddingTop: 6}}>Licence Plate:                             </Text>
+          <Text style={{paddingTop: 6}}>Licence Plate:</Text>
           <TextInput
               style={styles.input}
             placeholder="Enter License Plate"
@@ -179,7 +178,7 @@ export default class ReportScreen extends React.Component {
             key={this.state.imgPath}
             style={{
               width: 75,
-              height: 100,
+              height: 75,
               marginTop: 5,
               marginBottom: 5,
             }}
@@ -188,7 +187,6 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.sameLine}>
-          <Button color="#073763" title="Go back" onPress={() => 5} />
           <Button
             color="#073763"
             title="Publish Report"
@@ -378,10 +376,10 @@ export default class ReportScreen extends React.Component {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 30,
+    fontSize: 25,
     justifyContent: 'flex-start',
     textAlign: 'center',
-    margin: 5,
+    marginTop: 5,
   },
   subtitle: {
     fontSize: 20,
@@ -412,8 +410,16 @@ const styles = StyleSheet.create({
   },
   input: {
     margin: 5,
-    height: 40,
+    height: 36,
     borderColor: '#073763',
     borderWidth: 1,
   },
+  descriptionInput: {
+    width: 250,
+    margin: 5,
+    height: 36,
+    borderColor: '#073763',
+    borderWidth: 1,
+  },
+
 });
