@@ -63,6 +63,7 @@ export default class ReportScreen extends React.Component {
       <View style={styles.container}>
         <Text style={styles.title}>Publish Report</Text>
         <View style={styles.horizontal}>
+          <Text style={styles.importantText}>* </Text>
           <Text style={{paddingTop: 6}}>Title of Incident: </Text>
           <TextInput
             style={{height: 35}}
@@ -72,6 +73,7 @@ export default class ReportScreen extends React.Component {
           />
         </View>
         <View style={styles.horizontal}>
+          <Text style={styles.importantText}>* </Text>
           <Text style={{paddingTop: 6}}>Description: </Text>
           <TextInput
             style={{height: 35, marginTop: 0}}
@@ -81,6 +83,7 @@ export default class ReportScreen extends React.Component {
           />
         </View>
         <View style={styles.sameLine}>
+          <Text style={styles.importantText}>* </Text>
           <Text style={{paddingTop: 6}}>Location </Text>
           <TextInput
             style={{height: 35, marginTop: 0}}
@@ -99,6 +102,7 @@ export default class ReportScreen extends React.Component {
           <Text style={{marginVertical: 10, fontSize: 18}}>Vehicle Info</Text>
         </View>
         <View style={styles.sameLine}>
+          <Text style={styles.importantText}>* </Text>
           <Text style={{paddingTop: 6}}>Model: </Text>
           <TextInput
             style={{height: 35, marginTop: 0}}
@@ -127,6 +131,7 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.sameLine}>
+          <Text style={styles.importantText}>* </Text>
           <Text style={{paddingTop: 6}}>Date of Event: </Text>
           <DatePicker
             style={{width: 200, marginBottom: 15}}
@@ -230,7 +235,7 @@ export default class ReportScreen extends React.Component {
     } catch (err) {
       console.warn(err);
     }
-    console.log("Now to get location!");
+    console.log('Now to get retrieve location from coordinates.');
     Geocoder.init('AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc', {language: 'en'}); // set the language
     Geocoder.from(41.89, 12.49)
       .then(json => {
@@ -261,77 +266,102 @@ export default class ReportScreen extends React.Component {
   };
 
   publish = () => {
-    this.setState({
-      reportArray: null,
-    });
-    var title = this.state.title;
-    var desc = this.state.description;
-    var longitude = this.state.longitude;
-    var latitude = this.state.latitude;
-    var location = this.state.location;
-    var model = this.state.model;
-    var color = this.state.color;
-    var plateNumber = this.state.plateNumber;
-    var date = this.state.date;
-    var img = this.state.imgPath;
-    var upvotes = this.state.upvotes;
-    var numCount = 0;
-    var report = {
-      title,
-      desc,
-      latitude,
-      longitude,
-      location,
-      model,
-      color,
-      plateNumber,
-      date,
-      img,
-      upvotes,
-    };
-    tempArray.push(report);
+    var missingFields = '';
 
-    console.log('title : ' + report.title);
-    console.log('desc : ' + report.desc);
-    console.log('latitude : ' + report.latitude);
-    console.log('longitude : ' + report.longitude);
-    console.log('location : ' + report.location);
-    console.log('model : ' + report.model);
-    console.log('color : ' + report.color);
-    console.log('plate number : ' + report.plateNumber);
-    console.log('date : ' + report.date);
-    console.log('image data : ' + report.img);
-    console.log('report array: ' + JSON.stringify(tempArray));
+    if (this.state.title == null) {
+      missingFields += 'Title cannot be empty';
+    }
+    if (this.state.description == null) {
+      missingFields += '\nDescription cannot be empty';
+    }
 
-    var dataRef = firebase.database().ref('data');
+    if (
+      this.state.location == null &&
+      (this.state.longitude == null && this.state.latitude == null)
+    ) {
+      missingFields += '\nLocation information cannot be empty';
+    }
+    if (this.state.model == null) {
+      missingFields += '\nCar model information cannot be empty';
+    }
+    if (this.state.date == '') {
+      missingFields += '\nDate information cannot be empty';
+    }
+    console.log(missingFields);
 
-    dataRef.once('value', snapshot => {
-      snapshot.forEach(childSnapshot => {
-        numCount++;
-        console.log(numCount);
-        this.setState({
-          idNum: numCount,
+    if (missingFields == '') {
+      this.setState({
+        reportArray: null,
+      });
+      var title = this.state.title;
+      var desc = this.state.description;
+      var longitude = this.state.longitude;
+      var latitude = this.state.latitude;
+      var location = this.state.location;
+      var model = this.state.model;
+      var color = this.state.color;
+      var plateNumber = this.state.plateNumber;
+      var date = this.state.date;
+      var img = this.state.imgPath;
+      var upvotes = this.state.upvotes;
+      var numCount = 0;
+      var report = {
+        title,
+        desc,
+        latitude,
+        longitude,
+        location,
+        model,
+        color,
+        plateNumber,
+        date,
+        img,
+        upvotes,
+      };
+      tempArray.push(report);
+
+      console.log('title : ' + report.title);
+      console.log('desc : ' + report.desc);
+      console.log('latitude : ' + report.latitude);
+      console.log('longitude : ' + report.longitude);
+      console.log('location : ' + report.location);
+      console.log('model : ' + report.model);
+      console.log('color : ' + report.color);
+      console.log('plate number : ' + report.plateNumber);
+      console.log('date : ' + report.date);
+      console.log('image data : ' + report.img);
+      console.log('report array: ' + JSON.stringify(tempArray));
+
+      var dataRef = firebase.database().ref('data');
+
+      dataRef.once('value', snapshot => {
+        snapshot.forEach(childSnapshot => {
+          numCount++;
+          console.log(numCount);
+          this.setState({
+            idNum: numCount,
+          });
         });
       });
-    });
 
-    setTimeout(function() {
-      console.log('COUNT: ' + numCount.toString());
-      dataRef.push().set({
-        idNum: numCount,
-        title: report.title,
-        desc: report.desc,
-        latitude: report.latitude,
-        longitude: report.longitude,
-        location: report.location,
-        model: report.model,
-        color: report.color,
-        plateNumber: report.plateNumber,
-        date: report.date,
-        image: report.img,
-        upvotes: report.upvotes,
-      });
-    }, 5000);
+      setTimeout(function() {
+        console.log('COUNT: ' + numCount.toString());
+        dataRef.push().set({
+          idNum: numCount,
+          title: report.title,
+          desc: report.desc,
+          latitude: report.latitude,
+          longitude: report.longitude,
+          location: report.location,
+          model: report.model,
+          color: report.color,
+          plateNumber: report.plateNumber,
+          date: report.date,
+          image: report.img,
+          upvotes: report.upvotes,
+        });
+      }, 5000);
+    }
   };
 }
 
@@ -363,5 +393,9 @@ const styles = StyleSheet.create({
   },
   centerText: {
     alignItems: 'center',
+  },
+  importantText: {
+    paddingTop: 6,
+    color: '#ff0000',
   },
 });
