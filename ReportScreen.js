@@ -52,7 +52,7 @@ export default class ReportScreen extends React.Component {
       color: null,
       plateNumber: null,
       date: '',
-      imgPath: " ",
+      imgPath: ' ',
       upvotes: 0,
     };
   }
@@ -74,8 +74,8 @@ export default class ReportScreen extends React.Component {
         <View style={styles.horizontal}>
           <Text style={{paddingTop: 6}}>Description: </Text>
           <TextInput
-            style={{height:35,marginTop: 0}}
-            placeholder={"Enter description"}
+            style={{height: 35, marginTop: 0}}
+            placeholder={'Enter description'}
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({description: text})}
           />
@@ -83,25 +83,25 @@ export default class ReportScreen extends React.Component {
         <View style={styles.sameLine}>
           <Text style={{paddingTop: 6}}>Location </Text>
           <TextInput
-              style={{height:35,marginTop: 0}}
-              placeholder={"Enter location"}
-              returnKeyLabel={'next'}
-              onChangeText={text => this.setState({location: text})}
+            style={{height: 35, marginTop: 0}}
+            placeholder={'Enter location'}
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({location: text})}
           />
-          <Text style={{paddingTop: 6}}> Or   </Text>
+          <Text style={{paddingTop: 6}}> Or </Text>
           <Button
             color="#073763"
             title={'Get location'}
             onPress={() => this.getLocation()}
           />
-
         </View>
         <View style={styles.centerText}>
           <Text style={{marginVertical: 10, fontSize: 18}}>Vehicle Info</Text>
         </View>
         <View style={styles.sameLine}>
-          <Text  style={{paddingTop: 6}}>Model: </Text>
-          <TextInput style={{height:35,marginTop: 0}}
+          <Text style={{paddingTop: 6}}>Model: </Text>
+          <TextInput
+            style={{height: 35, marginTop: 0}}
             placeholder="Enter Vehicle Model"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({model: text})}
@@ -110,7 +110,7 @@ export default class ReportScreen extends React.Component {
         <View style={styles.sameLine}>
           <Text style={{paddingTop: 6}}>Color: </Text>
           <TextInput
-              style={{height:35,marginTop: 0}}
+            style={{height: 35, marginTop: 0}}
             placeholder="Enter Vehicle Color"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({color: text})}
@@ -119,7 +119,7 @@ export default class ReportScreen extends React.Component {
         <View style={styles.sameLine}>
           <Text style={{paddingTop: 6}}>Licence Plate: </Text>
           <TextInput
-              style={{height:35,marginTop: 0}}
+            style={{height: 35, marginTop: 0}}
             placeholder="Enter License Plate"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({plateNumber: text})}
@@ -158,7 +158,7 @@ export default class ReportScreen extends React.Component {
         <View style={styles.sameLine}>
           <Text style={{paddingTop: 6}}>Picture of Driver: </Text>
           <Button
-              style={{marginRight: 5}}
+            style={{marginRight: 5}}
             color="#073763"
             title="Take Picture"
             onPress={() => this.capture()}
@@ -230,6 +230,14 @@ export default class ReportScreen extends React.Component {
     } catch (err) {
       console.warn(err);
     }
+    console.log("Now to get location!");
+    Geocoder.init('AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc', {language: 'en'}); // set the language
+    Geocoder.from(41.89, 12.49)
+      .then(json => {
+        var addressComponent = json.results[0].address_components[0];
+        console.log(addressComponent);
+      })
+      .catch(error => console.warn(error));
   };
 
   capture = () => {
@@ -249,7 +257,7 @@ export default class ReportScreen extends React.Component {
   };
 
   resetImage = () => {
-    this.setState({imgPath: " "});
+    this.setState({imgPath: ' '});
   };
 
   publish = () => {
@@ -268,7 +276,19 @@ export default class ReportScreen extends React.Component {
     var img = this.state.imgPath;
     var upvotes = this.state.upvotes;
     var numCount = 0;
-    var report = {title, desc, latitude, longitude, location, model, color, plateNumber, date, img, upvotes};
+    var report = {
+      title,
+      desc,
+      latitude,
+      longitude,
+      location,
+      model,
+      color,
+      plateNumber,
+      date,
+      img,
+      upvotes,
+    };
     tempArray.push(report);
 
     console.log('title : ' + report.title);
@@ -291,12 +311,12 @@ export default class ReportScreen extends React.Component {
         console.log(numCount);
         this.setState({
           idNum: numCount,
-        })
-      })
+        });
+      });
     });
 
-    setTimeout(function () {
-      console.log("COUNT: " + numCount.toString());
+    setTimeout(function() {
+      console.log('COUNT: ' + numCount.toString());
       dataRef.push().set({
         idNum: numCount,
         title: report.title,
@@ -312,8 +332,6 @@ export default class ReportScreen extends React.Component {
         upvotes: report.upvotes,
       });
     }, 5000);
-
-
   };
 }
 
