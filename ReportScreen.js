@@ -37,19 +37,12 @@ export default class ReportScreen extends React.Component {
     if (!firebase.apps.length) {
       firebase.initializeApp(firebaseConfig);
     }
-
-    // firebase
-    //   .database()
-    //   .ref('users/001')
-    //   .set({
-    //     name: 'test',
-    //     age: 21,
-    //   });
   }
 
   constructor(props) {
     super(props);
     this.state = {
+      idNum: 0,
       title: null,
       description: null,
       longitude: null,
@@ -59,7 +52,8 @@ export default class ReportScreen extends React.Component {
       color: null,
       plateNumber: null,
       date: '',
-      imgPath: null,
+      imgPath: " ",
+      upvotes: 0,
     };
   }
 
@@ -255,8 +249,9 @@ export default class ReportScreen extends React.Component {
   };
 
   resetImage = () => {
-    this.setState({imgPath: null});
+    this.setState({imgPath: " "});
   };
+
   publish = () => {
     this.setState({
       reportArray: null,
@@ -271,19 +266,11 @@ export default class ReportScreen extends React.Component {
     var plateNumber = this.state.plateNumber;
     var date = this.state.date;
     var img = this.state.imgPath;
-    var report = {
-      title,
-      desc,
-      latitude,
-      longitude,
-      location,
-      model,
-      color,
-      plateNumber,
-      date,
-      img,
-    };
+    var upvotes = this.state.upvotes;
+    var numCount = 0;
+    var report = {title, desc, latitude, longitude, location, model, color, plateNumber, date, img, upvotes};
     tempArray.push(report);
+
     console.log('title : ' + report.title);
     console.log('desc : ' + report.desc);
     console.log('latitude : ' + report.latitude);
@@ -296,26 +283,37 @@ export default class ReportScreen extends React.Component {
     console.log('image data : ' + report.img);
     console.log('report array: ' + JSON.stringify(tempArray));
 
-    var dataRef = firebase.database().ref('data'); // .push({report});
-    dataRef.push().set({
-      title: report.title,
-      desc: report.desc,
-      latitude: report.latitude,
-      longitude: report.longitude,
-      location: report.location,
-      model: report.model,
-      color: report.color,
-      plateNumber: report.plateNumber,
-      date: report.date,
-      image: report.img
+    var dataRef = firebase.database().ref('data');
+
+    dataRef.once('value', snapshot => {
+      snapshot.forEach(childSnapshot => {
+        numCount++;
+        console.log(numCount);
+        this.setState({
+          idNum: numCount,
+        })
+      })
     });
 
-    // firebase
-    //   .database()
-    //   .ref('data')
-    //   .push({
-    //     report,
-    //   });
+    setTimeout(function () {
+      console.log("COUNT: " + numCount.toString());
+      dataRef.push().set({
+        idNum: numCount,
+        title: report.title,
+        desc: report.desc,
+        latitude: report.latitude,
+        longitude: report.longitude,
+        location: report.location,
+        model: report.model,
+        color: report.color,
+        plateNumber: report.plateNumber,
+        date: report.date,
+        image: report.img,
+        upvotes: report.upvotes,
+      });
+    }, 5000);
+
+
   };
 }
 

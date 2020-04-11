@@ -14,8 +14,10 @@ import{
 } from 'react-native';
 import * as firebase from 'firebase';
 
-const reportArray = [];
+var reportArray = [];
+
 export default class BrowseScreen extends React.Component {
+
     componentWillMount() {
         const firebaseConfig = {
             apiKey: 'AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc',
@@ -40,23 +42,23 @@ export default class BrowseScreen extends React.Component {
                 console.log(JSON.stringify(reportData));
                 console.log(JSON.stringify(reportArray));
             })
-        })
+        });
     }
 
     render() {
-
+        console.log(JSON.stringify(reportArray));
         return (
             <View style={styles.container}>
                 <FlatList
                     numColumns={1}
                     data={reportArray}
-                    renderItem={({ item }) => (
+                    renderItem={({ item, index }) => (
                         <View style={styles.item}>
-                            <Text  style={styles.title}> {item.title}</Text>
+                            <Text  style={styles.title}>{item.idNum + 1}. {item.title}</Text>
                             <Text style={styles.subTitle}>{item.date}</Text>
                         </View>
                     )}
-                    keyExtractor={item => item.id.toString()}
+                    keyExtractor={item => item.idNum}
                 />
             </View>
         );
@@ -73,16 +75,18 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     item: {
-        backgroundColor: '#00ffff',
+        backgroundColor: '#073763',
         padding: 20,
         marginVertical: 8,
         marginHorizontal: 0,
     },
     title: {
         fontSize: 24,
+        color: '#fff',
     },
     subTitle: {
         fontSize: 16,
+        color: '#fff',
     },
 
 });
