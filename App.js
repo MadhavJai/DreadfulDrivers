@@ -16,6 +16,7 @@ import {
   View,
   Text,
   StatusBar,
+  Image,
 } from 'react-native';
 
 import {
@@ -59,6 +60,13 @@ function showReportScreen({navigation, route}) {
 function showHomeScreen({navigation}) {
   return (
     <View style={styles.container}>
+      <Image
+        style={{
+          width: 500,
+          height: 500,
+        }}
+        source={require('./logo.png')}
+      />
       <View style={styles.seperator}>
         <Button
           style={styles.button}

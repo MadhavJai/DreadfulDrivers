@@ -133,7 +133,7 @@ export default class ReportScreen extends React.Component {
           <Text style={styles.importantText}>* </Text>
           <Text style={{paddingTop: 6}}>Date of Event:                 </Text>
           <DatePicker
-            style={{width: 200, marginBottom: 15}}
+            style={{width: 200, marginBottom: 10}}
             date={this.state.date}
             mode="date"
             placeholder="select date"
