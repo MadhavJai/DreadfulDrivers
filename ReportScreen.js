@@ -61,10 +61,11 @@ export default class ReportScreen extends React.Component {
     const {date} = this.state;
     return (
       <View style={styles.container}>
+
+
         <View style={styles.horizontal}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Title of Incident:</Text>
-
+          <Text style={{marginTop : 12}}>Title of Incident:</Text>
         </View>
         <TextInput
             style={styles.descriptionInput}
@@ -72,10 +73,9 @@ export default class ReportScreen extends React.Component {
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({title: text})}
         />
-        <View style={styles.horizontal}>
+        <View style={{flexDirection: 'row'}}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Description</Text>
-
+          <Text style={{marginTop : 12}}>Description</Text>
         </View>
         <TextInput
             style={styles.descriptionInput}
@@ -85,33 +85,36 @@ export default class ReportScreen extends React.Component {
         />
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Location:            </Text>
+          <Text style={{marginTop : 12}}>Location:</Text>
           <TextInput
               style={styles.input}
             placeholder={'Enter location'}
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({location: text})}
           />
-          <Text style={{paddingTop: 6}}> Or </Text>
+          <Text style={{marginTop: 12}}> Or   </Text>
+          <View style={{height : 25, marginTop : 5}}>
           <Button
-            color="#073763"
-            title={'Get location'}
-            onPress={() => this.getLocation()}
+              color="#073763"
+              title={'Get location'}
+              onPress={() => this.getLocation()}
           />
+          </View>
         </View>
+
         <View style={styles.centerText}>
           <Text style={{fontSize: 18}}>Vehicle Info</Text>
         </View>
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Model:</Text>
+          <Text style={{marginTop : 12}}>Model:</Text>
           <TextInput
               style={styles.input}
             placeholder="Enter Vehicle Model"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({model: text})}
           />
-          <Text style={{paddingTop: 6}}>Color:</Text>
+          <Text style={{marginTop : 12}}>Color:</Text>
           <TextInput
               style={styles.input}
               placeholder="Enter Vehicle Color"
@@ -120,7 +123,7 @@ export default class ReportScreen extends React.Component {
           />
         </View>
         <View style={styles.sameLine}>
-          <Text style={{paddingTop: 6}}>Licence Plate:</Text>
+          <Text style={{marginTop : 12}}>Licence Plate:</Text>
           <TextInput
               style={styles.input}
             placeholder="Enter License Plate"
@@ -131,7 +134,7 @@ export default class ReportScreen extends React.Component {
 
         <View style={styles.sameLine}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{paddingTop: 6}}>Date of Event:                 </Text>
+          <Text style={{marginTop : 12}}>Date of Event:              </Text>
           <DatePicker
             style={{width: 200, marginBottom: 10}}
             date={this.state.date}
@@ -151,7 +154,6 @@ export default class ReportScreen extends React.Component {
               dateInput: {
                 marginLeft: 36,
               },
-              // ... You can check the source to find the other keys.
             }}
             onDateChange={date => {
               this.setState({date: date});
@@ -162,7 +164,6 @@ export default class ReportScreen extends React.Component {
         <View style={styles.sameLine}>
           <Text style={{paddingTop: 6}}>Picture of Driver: </Text>
           <Button
-            style={{marginRight: 5}}
             color="#073763"
             title="Take Picture"
             onPress={() => this.capture()}
@@ -177,8 +178,8 @@ export default class ReportScreen extends React.Component {
           <Image
             key={this.state.imgPath}
             style={{
-              width: 75,
-              height: 75,
+              width: 90,
+              height: 100,
               marginTop: 5,
               marginBottom: 5,
             }}
@@ -193,7 +194,7 @@ export default class ReportScreen extends React.Component {
             onPress={() => this.publish()}
           />
         </View>
-        <Text style={styles.importantText}>* Required Fields</Text>
+        <Text style={styles.importantText2}>* Required Fields</Text>
       </View>
     );
   }
@@ -257,7 +258,7 @@ export default class ReportScreen extends React.Component {
       })
       .catch(e => {
         //if picture is never taken, width and height states are updated
-        Alert.alert('Camera Error', 'Error: "No Image Selected" ');
+        Alert.alert('Picture Not Captured', 'Picture was not captured.');
       });
   };
 
@@ -266,30 +267,30 @@ export default class ReportScreen extends React.Component {
   };
 
   publish = () => {
-    var missingFields = '';
+    var missingFields = 'Provide details in the following fields: \n';
 
     if (this.state.title == null) {
-      missingFields += 'Title cannot be empty';
+      missingFields += 'Title';
     }
     if (this.state.description == null) {
-      missingFields += '\nDescription cannot be empty';
+      missingFields += '\nDescription';
     }
 
     if (
       this.state.location == null &&
       (this.state.longitude == null && this.state.latitude == null)
     ) {
-      missingFields += '\nLocation information cannot be empty';
+      missingFields += '\nLocation';
     }
     if (this.state.model == null) {
-      missingFields += '\nCar model information cannot be empty';
+      missingFields += '\nCar Model';
     }
     if (this.state.date == '') {
-      missingFields += '\nDate information cannot be empty';
+      missingFields += '\nDate information';
     }
     console.log(missingFields);
 
-    if (missingFields == '') {
+    if (missingFields == 'Provide details in the following fields: \n') {
       this.setState({
         reportArray: null,
       });
@@ -367,7 +368,7 @@ export default class ReportScreen extends React.Component {
     }
     else{
       Alert.alert(
-          'Error : Missing Fields',
+          'Error in Publishing : Missing Fields',
           missingFields,
       );
     }
@@ -388,7 +389,7 @@ const styles = StyleSheet.create({
   },
   horizontal: {
     flexDirection: 'row',
-    marginTop: 25,
+    marginTop: 15,
   },
   container: {
     flex: 1,
@@ -405,7 +406,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   importantText: {
-    paddingTop: 6,
+    marginTop: 12,
+    color: '#ff0000',
+  },
+  importantText2: {
+    marginTop: 6,
     color: '#ff0000',
   },
   input: {
@@ -420,6 +425,9 @@ const styles = StyleSheet.create({
     height: 36,
     borderColor: '#073763',
     borderWidth: 1,
+  },
+  buttonSize: {
+    height: 25,
   },
 
 });

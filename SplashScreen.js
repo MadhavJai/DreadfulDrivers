@@ -8,8 +8,8 @@ export default ({history}) => (
     <Text>By: Arjun Suthaharan and Madhav Jaisankar</Text>
     <Image
       style={{
-        width: 500,
-        height: 500,
+        width: 350,
+        height: 300,
       }}
       source={require('./logo.png')}
     />

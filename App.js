@@ -60,11 +60,11 @@ function showReportScreen({navigation, route}) {
 function showHomeScreen({navigation}) {
   return (
     <View style={styles.container}>
-      <Text>Dreadful Drivers</Text>
+      <Text style={{marginTop : 150}}>Dreadful Drivers</Text>
       <Image
         style={{
-          width: 500,
-          height: 500,
+          width: 350,
+          height: 300,
         }}
         source={require('./logo.png')}
       />
