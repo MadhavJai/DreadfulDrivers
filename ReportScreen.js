@@ -57,7 +57,6 @@ export default class ReportScreen extends React.Component {
       plateNumber: null,
       date: '',
       imgPath: ' ',
-      upvotes: 0,
     };
   }
 
@@ -75,6 +74,7 @@ export default class ReportScreen extends React.Component {
             placeholder="Enter Title"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({title: text})}
+            ref={input => { this.title = input }}
         />
         <View style={{flexDirection: 'row'}}>
           <Text style={{color: '#ff0000', marginTop: 12}}>* </Text>
@@ -85,6 +85,7 @@ export default class ReportScreen extends React.Component {
             placeholder={'Enter description'}
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({description: text})}
+            ref={input => { this.description = input }}
         />
         <View style={styles.sameLine}>
           <Text style={{color: '#ff0000', marginTop: 12}}>* </Text>
@@ -94,6 +95,7 @@ export default class ReportScreen extends React.Component {
             placeholder={'Enter location'}
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({location: text})}
+              ref={input => { this.location = input }}
           />
           <Text style={{marginTop: 12}}> Or   </Text>
           <View style={{height : 25, marginTop : 5}}>
@@ -116,6 +118,7 @@ export default class ReportScreen extends React.Component {
             placeholder="Enter Vehicle Model"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({model: text})}
+              ref={input => { this.model = input }}
           />
         </View>
         <View style={styles.horizontal}>
@@ -126,6 +129,7 @@ export default class ReportScreen extends React.Component {
               placeholder="Enter Vehicle Color"
               returnKeyLabel={'next'}
               onChangeText={text => this.setState({color: text})}
+              ref={input => { this.color = input }}
           />
         </View>
         <View style={styles.sameLine}>
@@ -135,6 +139,7 @@ export default class ReportScreen extends React.Component {
             placeholder="Enter License Plate"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({plateNumber: text})}
+              ref={input => { this.plateNumber = input }}
           />
         </View>
 
@@ -265,14 +270,14 @@ export default class ReportScreen extends React.Component {
         //once promise is met, sets imgPath state to the images path
         ImgToBase64.getBase64String(image.path)
         .then(base64String => {
-          
+
           this.setState({imgPath: "data:image/jpeg;base64," + base64String});
         })
         .catch(err => {
           Alert.alert("Error", "Something went wrong when encoding the image. Please try again");
         })
 
-        
+
       })
       .catch(e => {
         //if picture is never taken, width and height states are updated
@@ -322,7 +327,6 @@ export default class ReportScreen extends React.Component {
       var plateNumber = this.state.plateNumber;
       var date = this.state.date;
       var img = this.state.imgPath;
-      var upvotes = this.state.upvotes;
       var numCount = 0;
       var report = {
         title,
@@ -335,24 +339,8 @@ export default class ReportScreen extends React.Component {
         plateNumber,
         date,
         img,
-        upvotes,
       };
       tempArray.push(report);
-/*
-      console.log('title : ' + report.title);
-      console.log('desc : ' + report.desc);
-      console.log('latitude : ' + report.latitude);
-      console.log('longitude : ' + report.longitude);
-      console.log('location : ' + report.location);
-      console.log('model : ' + report.model);
-      console.log('color : ' + report.color);
-      console.log('plate number : ' + report.plateNumber);
-      console.log('date : ' + report.date);
-      console.log('image data : ' + report.img);
-      console.log('report array: ' + JSON.stringify(tempArray));
-
-
- */
 
       var dataRef = firebase.database().ref('data');
 
@@ -380,12 +368,31 @@ export default class ReportScreen extends React.Component {
           plateNumber: report.plateNumber,
           date: report.date,
           image: report.img,
-          upvotes: report.upvotes,
         });
       }, 5000);
       Alert.alert(
           'Succesfully Published Report!'
       );
+
+      this.title.clear();
+      this.setState({title : null});
+      this.description.clear();
+      this.setState({description : null});
+      this.location.clear();
+      this.setState({location : null});
+      this.setState({latitude : null});
+      this.setState({longitude : null});
+      this.model.clear();
+      this.setState({model : null});
+      this.color.clear();
+      this.setState({color : null});
+      this.plateNumber.clear();
+      this.setState({plateNumber : null});
+      this.setState({date : ''});
+      this.setState({imgPath: ' '});
+
+
+
     }
     else{
       Alert.alert(
