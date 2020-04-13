@@ -45,9 +45,9 @@ function showFlatList({navigation}) {
 function showDetailsScreen({route, navigation}) {
   const {reportObj} = route.params;
   return (
-    <View>
-      <Text>Title: {reportObj.title}</Text>
-      <Text>{reportObj.date}</Text>
+    <View style={styles.container}>
+      <Text style={{fontSize: 36}}>{reportObj.title}</Text>
+      <Text>Date of incident: {reportObj.date}</Text>
       <Text>Description: {reportObj.desc}</Text>
       <Image
         style={{height: 50, width: 50, marginVertical: 5}}
@@ -134,6 +134,10 @@ export default class BrowseScreen extends React.Component {
 }
 
 const styles = StyleSheet.create({
+
+  centerText: {
+    alignItems: 'center', 
+  },
     loadingState: {
         flex: 1,
         backgroundColor: '#fff',
