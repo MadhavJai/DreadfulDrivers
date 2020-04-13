@@ -13,6 +13,7 @@ export default ({history}) => (
       }}
       source={require('./logo.png')}
     />
+    <Text style={{color: '#ff0000'}}> Warning : DO NOT create or browse reports while driving!</Text>
   </View>
 );
 

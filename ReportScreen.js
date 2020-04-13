@@ -141,7 +141,8 @@ export default class ReportScreen extends React.Component {
             mode="date"
             placeholder="select date"
             format="YYYY-MM-DD"
-            minDate="2016-05-01"
+            minDate="2020-01-01"
+            maxDate={new Date()}
             confirmBtnText="Confirm"
             cancelBtnText="Cancel"
             customStyles={{
@@ -235,7 +236,6 @@ export default class ReportScreen extends React.Component {
     } catch (err) {
       console.warn(err);
     }
-    console.log('Now to get retrieve location from coordinates.');
     Geocoder.init('AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc', {language: 'en'}); // set the language
     Geocoder.from(41.89, 12.49)
       .then(json => {
@@ -288,7 +288,7 @@ export default class ReportScreen extends React.Component {
     if (this.state.date == '') {
       missingFields += '\nDate information';
     }
-    console.log(missingFields);
+
 
     if (missingFields == 'Provide details in the following fields: \n') {
       this.setState({
@@ -320,7 +320,7 @@ export default class ReportScreen extends React.Component {
         upvotes,
       };
       tempArray.push(report);
-
+/*
       console.log('title : ' + report.title);
       console.log('desc : ' + report.desc);
       console.log('latitude : ' + report.latitude);
@@ -332,6 +332,9 @@ export default class ReportScreen extends React.Component {
       console.log('date : ' + report.date);
       console.log('image data : ' + report.img);
       console.log('report array: ' + JSON.stringify(tempArray));
+
+
+ */
 
       var dataRef = firebase.database().ref('data');
 

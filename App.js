@@ -60,7 +60,7 @@ function showReportScreen({navigation, route}) {
 function showHomeScreen({navigation}) {
   return (
     <View style={styles.container}>
-      <Text style={{marginTop : 150}}>Dreadful Drivers</Text>
+      <Text>Dreadful Drivers</Text>
       <Image
         style={{
           width: 350,
@@ -93,9 +93,9 @@ function showHomeScreen({navigation}) {
       </View>
       <View style={styles.seperator}>
         <Button
-          color="#073763"
-          title={'Back to launch screen'}
-          onPress={() => navigation.navigate('Project DD')}
+            color="#073763"
+            title={'Back to launch screen'}
+            onPress={() => navigation.navigate('Project DD')}
         />
       </View>
     </View>
@@ -204,8 +204,8 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   seperator: {
-    marginTop: 8,
-    marginBottom: 8,
+    margin: 8,
+    width: 350,
   },
   button: {
     flex: 1,
