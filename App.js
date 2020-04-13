@@ -64,8 +64,8 @@ function showHomeScreen({navigation}) {
       <Text>By: Arjun Suthaharan and Madhav Jaisankar</Text>
       <Image
         style={{
-          width: 350,
-          height: 300,
+          width: 330,
+          height: 280,
         }}
         source={require('./logo.png')}
       />
@@ -84,21 +84,8 @@ function showHomeScreen({navigation}) {
           onPress={() => navigation.navigate('Browse Reports')}
         />
       </View>
-      <View style={styles.seperator}>
-        <Button
-          color="#073763"
-          style={styles.seperator}
-          title={'Preferences'}
-          onPress={() => navigation.navigate('Preferences')}
-        />
-      </View>
-      <View style={styles.seperator}>
-        <Button
-            color="#073763"
-            title={'Back to launch screen'}
-            onPress={() => navigation.navigate('Project DD')}
-        />
-      </View>
+
+
     </View>
   );
 }
@@ -130,7 +117,6 @@ export default class App extends React.Component {
 
   setTimePassed() {
     this.setState({timePassed: true});
-    console.log('Bruh');
   }
 
   render() {

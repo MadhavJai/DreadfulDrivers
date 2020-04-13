@@ -9,7 +9,7 @@ import {
   TouchableOpacity,
   Image,
   AppRegistry,
-  PermissionsAndroid,
+  PermissionsAndroid, ScrollView, RefreshControl,
 } from 'react-native';
 
 import {NavigationContainer} from '@react-navigation/native';
@@ -22,8 +22,11 @@ import * as firebase from 'firebase';
 
 const tempArray = [];
 
+
+
+
 export default class ReportScreen extends React.Component {
-  componentWillMount() {
+  componentDidMount() {
     const firebaseConfig = {
       apiKey: 'AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc',
       authDomain: 'dreadful-drivers.firebaseapp.com',
@@ -61,11 +64,10 @@ export default class ReportScreen extends React.Component {
     const {date} = this.state;
     return (
       <View style={styles.container}>
-
-
+      <ScrollView contentContainerStyle={styles.scrollView} >
         <View style={styles.horizontal}>
           <Text style={styles.importantText}>* </Text>
-          <Text style={{marginTop : 12}}>Title of Incident:</Text>
+          <Text >Title of Incident:</Text>
         </View>
         <TextInput
             style={styles.descriptionInput}
@@ -74,7 +76,7 @@ export default class ReportScreen extends React.Component {
             onChangeText={text => this.setState({title: text})}
         />
         <View style={{flexDirection: 'row'}}>
-          <Text style={styles.importantText}>* </Text>
+          <Text style={{color: '#ff0000', marginTop: 12}}>* </Text>
           <Text style={{marginTop : 12}}>Description</Text>
         </View>
         <TextInput
@@ -84,7 +86,7 @@ export default class ReportScreen extends React.Component {
             onChangeText={text => this.setState({description: text})}
         />
         <View style={styles.sameLine}>
-          <Text style={styles.importantText}>* </Text>
+          <Text style={{color: '#ff0000', marginTop: 12}}>* </Text>
           <Text style={{marginTop : 12}}>Location:</Text>
           <TextInput
               style={styles.input}
@@ -103,9 +105,9 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.centerText}>
-          <Text style={{fontSize: 18}}>Vehicle Info</Text>
+          <Text style={{fontSize: 18, marginVertical: 15, color: '#073763'}}>Vehicle Info</Text>
         </View>
-        <View style={styles.sameLine}>
+        <View style={styles.horizontal}>
           <Text style={styles.importantText}>* </Text>
           <Text style={{marginTop : 12}}>Model:</Text>
           <TextInput
@@ -114,6 +116,9 @@ export default class ReportScreen extends React.Component {
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({model: text})}
           />
+        </View>
+        <View style={styles.horizontal}>
+          <Text style={styles.importantText}>* </Text>
           <Text style={{marginTop : 12}}>Color:</Text>
           <TextInput
               style={styles.input}
@@ -163,11 +168,12 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.sameLine}>
-          <Text style={{paddingTop: 6}}>Picture of Driver: </Text>
+          <Text style={{paddingTop: 6}}>Picture:     </Text>
           <Button
             color="#073763"
             title="Take Picture"
             onPress={() => this.capture()}
+            style={{marginRight: 5}}
           />
           <Button
             color="#073763"
@@ -179,23 +185,26 @@ export default class ReportScreen extends React.Component {
           <Image
             key={this.state.imgPath}
             style={{
-              width: 90,
+              width: 100,
               height: 100,
               marginTop: 5,
               marginBottom: 5,
+              borderWidth: 3,
+              borderColor: "#000000",
             }}
             source={{uri: this.state.imgPath}}
           />
         </View>
-
-        <View style={styles.sameLine}>
+        <Text style={styles.importantText2}>* Required Fields</Text>
+        <View style={{marginTop: 5, marginBottom: 25}}>
           <Button
             color="#073763"
             title="Publish Report"
             onPress={() => this.publish()}
           />
         </View>
-        <Text style={styles.importantText2}>* Required Fields</Text>
+
+      </ScrollView>
       </View>
     );
   }
@@ -401,6 +410,7 @@ const styles = StyleSheet.create({
   },
   sameLine: {
     flexDirection: 'row',
+    marginVertical: 25,
   },
   buttonSpace: {
     marginRight: 5,
@@ -408,8 +418,10 @@ const styles = StyleSheet.create({
   centerText: {
     alignItems: 'center',
   },
+  scrollView: {
+    alignItems: 'center',
+  },
   importantText: {
-    marginTop: 12,
     color: '#ff0000',
   },
   importantText2: {

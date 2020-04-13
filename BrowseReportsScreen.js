@@ -15,6 +15,7 @@ import {
 import * as firebase from 'firebase';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
+import SplashScreen from "./SplashScreen";
 
 var reportArray = [];
 
@@ -64,7 +65,19 @@ function showDetailsScreen({route, navigation}) {
 const Stack = createStackNavigator();
 
 export default class BrowseScreen extends React.Component {
-  componentWillMount() {
+
+   constructor(props) {
+       super(props);
+       this.state = {
+           timePassed: false,
+       }
+   }
+
+    setTimePassed() {
+        this.setState({timePassed: true});
+    }
+
+  componentDidMount() {
     reportArray = [];
 
     const firebaseConfig = {
@@ -92,24 +105,41 @@ export default class BrowseScreen extends React.Component {
           console.log(JSON.stringify(reportKey));
           console.log(JSON.stringify(reportData));
           console.log(JSON.stringify(reportArray));
+          this.setTimePassed();
         });
       });
   }
 
   render() {
-    console.log(JSON.stringify(reportArray));
-    return (
-      <Stack.Navigator
-        initialRouteName={'ReportsList'}
-        screenOptions={{headerShown: false}}>
-        <Stack.Screen name={'ReportsList'} component={showFlatList} />
-        <Stack.Screen name={'DetailsScreen'} component={showDetailsScreen} />
-      </Stack.Navigator>
-    );
+    if(this.state.timePassed === false){
+        return (
+            <View style={styles.loadingState}>
+                <Text>Loading information</Text>
+            </View>
+        );
+    }
+    else{
+        console.log(JSON.stringify(reportArray));
+        return (
+            <Stack.Navigator
+                initialRouteName={'ReportsList'}
+                screenOptions={{headerShown: false}}>
+                <Stack.Screen name={'ReportsList'} component={showFlatList} />
+                <Stack.Screen name={'DetailsScreen'} component={showDetailsScreen} />
+            </Stack.Navigator>
+        );
+    }
+
   }
 }
 
 const styles = StyleSheet.create({
+    loadingState: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
   container: {
     flex: 1,
     backgroundColor: '#fff',
