@@ -67,7 +67,7 @@ export default class ReportScreen extends React.Component {
       <ScrollView contentContainerStyle={styles.scrollView} >
         <View style={styles.horizontal}>
           <Text style={styles.importantText}>* </Text>
-          <Text >Title of Incident:</Text>
+          <Text >Title of Incident</Text>
         </View>
         <TextInput
             style={styles.descriptionInput}
@@ -108,44 +108,43 @@ export default class ReportScreen extends React.Component {
         </View>
 
         <View style={styles.centerText}>
-          <Text style={{fontSize: 18, marginVertical: 15, color: '#073763'}}>Vehicle Info</Text>
+          <Text style={{fontSize: 20, marginVertical: 0, color: '#073763'}}>Vehicle Info</Text>
         </View>
         <View style={styles.horizontal}>
-          <Text style={styles.importantText}>* </Text>
-          <Text style={{marginTop : 12}}>Model:</Text>
-          <TextInput
-              style={styles.input}
+          <Text style={styles.importantText2}>* </Text>
+          <Text style={{marginTop : 6}}>Model:</Text>
+        </View>
+        <TextInput
+            style={styles.descriptionInput}
             placeholder="Enter Vehicle Model"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({model: text})}
-              ref={input => { this.model = input }}
-          />
-        </View>
+            ref={input => { this.model = input }}
+        />
         <View style={styles.horizontal}>
-          <Text style={styles.importantText}>* </Text>
-          <Text style={{marginTop : 12}}>Color:</Text>
-          <TextInput
-              style={styles.input}
-              placeholder="Enter Vehicle Color"
-              returnKeyLabel={'next'}
-              onChangeText={text => this.setState({color: text})}
-              ref={input => { this.color = input }}
-          />
+          <Text style={{marginTop : 3}}>Color:</Text>
         </View>
-        <View style={styles.sameLine}>
-          <Text style={{marginTop : 12}}>Licence Plate:</Text>
-          <TextInput
-              style={styles.input}
+        <TextInput
+            style={styles.descriptionInput}
+            placeholder="Enter Vehicle Color"
+            returnKeyLabel={'next'}
+            onChangeText={text => this.setState({color: text})}
+            ref={input => { this.color = input }}
+        />
+        <View style={styles.horizontal}>
+          <Text style={{marginTop : 6}}>Licence Plate:</Text>
+        </View>
+        <TextInput
+            style={styles.descriptionInput}
             placeholder="Enter License Plate"
             returnKeyLabel={'next'}
             onChangeText={text => this.setState({plateNumber: text})}
-              ref={input => { this.plateNumber = input }}
-          />
-        </View>
+            ref={input => { this.plateNumber = input }}
+        />
 
         <View style={styles.sameLine}>
-          <Text style={styles.importantText}>* </Text>
-          <Text style={{marginTop : 12}}>Date of Event:              </Text>
+          <Text style={styles.importantText2}>* </Text>
+          <Text style={{marginTop : 6}}>Date of Event:            </Text>
           <DatePicker
             style={{width: 200, marginBottom: 10}}
             date={this.state.date}
@@ -175,12 +174,14 @@ export default class ReportScreen extends React.Component {
 
         <View style={styles.sameLine}>
           <Text style={{paddingTop: 6}}>Picture:     </Text>
+          <View style={{marginRight: 12}}>
           <Button
             color="#073763"
             title="Take Picture"
             onPress={() => this.capture()}
             style={{marginRight: 5}}
           />
+          </View>
           <Button
             color="#073763"
             title="Reset Picture"
@@ -426,7 +427,7 @@ const styles = StyleSheet.create({
   },
   sameLine: {
     flexDirection: 'row',
-    marginVertical: 25,
+    marginVertical: 15,
   },
   buttonSpace: {
     marginRight: 5,
@@ -452,6 +453,13 @@ const styles = StyleSheet.create({
   },
   descriptionInput: {
     width: 250,
+    margin: 5,
+    height: 40,
+    borderColor: '#073763',
+    borderWidth: 1,
+  },
+  input2: {
+    width: 100,
     margin: 5,
     height: 36,
     borderColor: '#073763',
