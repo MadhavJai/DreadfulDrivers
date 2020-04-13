@@ -19,6 +19,7 @@ import DatePicker from 'react-native-datepicker';
 import Geolocation from 'react-native-geolocation-service';
 import Geocoder from 'react-native-geocoding';
 import * as firebase from 'firebase';
+import ImgToBase64 from 'react-native-image-base64';
 
 const tempArray = [];
 
@@ -181,16 +182,14 @@ export default class ReportScreen extends React.Component {
             onPress={() => this.resetImage()}
           />
         </View>
-        <View>
+        <View style={{borderWidth: 1}}>
           <Image
             key={this.state.imgPath}
             style={{
-              width: 100,
-              height: 100,
+              width: 200,
+              height: 200,
               marginTop: 5,
               marginBottom: 5,
-              borderWidth: 3,
-              borderColor: "#000000",
             }}
             source={{uri: this.state.imgPath}}
           />
@@ -254,6 +253,7 @@ export default class ReportScreen extends React.Component {
       .catch(error => console.warn(error));
   };
 
+
   capture = () => {
     ImagePicker.openCamera({
       width: 300,
@@ -263,7 +263,16 @@ export default class ReportScreen extends React.Component {
     })
       .then(image => {
         //once promise is met, sets imgPath state to the images path
-        this.setState({imgPath: image.path});
+        ImgToBase64.getBase64String(image.path)
+        .then(base64String => {
+          
+          this.setState({imgPath: "data:image/jpeg;base64," + base64String});
+        })
+        .catch(err => {
+          Alert.alert("Error", "Something went wrong when encoding the image. Please try again");
+        })
+
+        
       })
       .catch(e => {
         //if picture is never taken, width and height states are updated
