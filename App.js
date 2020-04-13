@@ -60,7 +60,8 @@ function showReportScreen({navigation, route}) {
 function showHomeScreen({navigation}) {
   return (
     <View style={styles.container}>
-      <Text>Dreadful Drivers</Text>
+      <Text style={styles.title}>Dreadful Drivers</Text>
+      <Text>By: Arjun Suthaharan and Madhav Jaisankar</Text>
       <Image
         style={{
           width: 350,
@@ -210,5 +211,9 @@ const styles = StyleSheet.create({
   button: {
     flex: 1,
     justifyContent: 'center',
+  },
+  title : {
+    fontSize: 35,
+    marginBottom: 15,
   },
 });
