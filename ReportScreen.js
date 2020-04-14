@@ -236,7 +236,7 @@ export default class ReportScreen extends React.Component {
 
 
             Alert.alert(
-              'Location Retrieved',
+              'Location Retrieved', "Latitude: " + latitude + "\nLongitude: " + longitude
             );
             this.setState({longitude: longitude});
             this.setState({latitude: latitude});
