@@ -17,9 +17,39 @@ import * as firebase from 'firebase';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import SplashScreen from "./SplashScreen";
+import { SearchBar } from 'react-native-elements';
 
 
 var reportArray = [];
+
+// Doesn't work as intended
+function renderHeader() {
+  return (
+    <SearchBar
+      placeholder="Search here..."
+      lightTheme
+      round
+      onChangeText={text => 1}
+      autoCorrect = {false}
+      // value = {this.state.queryValue}
+    />
+  )
+}
+
+// Doesn't work
+function searchAndFilter(text) {
+  // this.setState({
+  //   queryValue: text
+  // })
+  const filteredData = reportArray.filter(item => {
+    const itemData = `${item.title.toUpperCase()}`;
+    const textData = text.toUpperCase();
+    return itemData.indexOf(textData) > -1;
+  });
+  // this.setState({
+  //   data: filteredData
+  // });
+}  
 
 function showFlatList({navigation}) {
   return (
@@ -40,49 +70,97 @@ function showFlatList({navigation}) {
         </TouchableOpacity>
       )}
       keyExtractor={item => item.idNum}
+      ListHeaderComponent = {renderHeader}
     />
   );
 }
 
 function showDetailsScreen({route, navigation}) {
   const {reportObj} = route.params;
-  return (
-    <View style={styles.container}>
-      <ScrollView contentContainerStyle={styles.scrollView}>
-        <Text style={{fontSize: 36}}>{reportObj.title}</Text>
-        <View style={styles.sameLine}>
-          <Text style={{fontSize: 18}}>Date of incident: </Text>
-          <Text style={{marginTop: 3.5}}>{reportObj.date}</Text>
-        </View>
-      
-        <Text style={{fontSize: 18, marginTop: 15}}>Description:</Text>
-      
-        <Text style={{marginVertical: 5}}>{reportObj.desc}</Text>
-
-        <Image
-          style={{height: 200, width: 200, marginVertical: 5, borderWidth: 3, borderColor: '#000000',}}
-          source={{uri: reportObj.image}}
-        />
-
-        <View style={styles.sameLine}>
-          <Text style={{fontSize: 18}}>Location of incident: </Text>
-          <Text style={{marginTop: 3.5}}>{reportObj.location}</Text>
-        </View>
+  var licensePlate;
+  if(reportObj.plateNumber === "") {
+    licensePlate = "No plate number given"
+  }
+  else{
+    licensePlate = reportObj.plateNumber;
+  }
+  if(reportObj.image === " "){
+    return (
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+            <Text style={{fontSize: 36, textAlign: 'center'}}>{reportObj.title}</Text>
+          
+          <View style={styles.sameLine}>
+            <Text style={{fontSize: 18}}>Date of incident: </Text>
+            <Text style={{marginTop: 3.5}}>{reportObj.date}</Text>
+          </View>
         
-        <View style={styles.sameLine}>
-          <Text style={{fontSize: 18}}>Make and Model: </Text>
-          <Text style={{marginTop: 3.5}}>{reportObj.model}</Text>
-        </View>
-
-        <View style={styles.sameLine}>
-          <Text style={{fontSize: 18}}>License plate number: </Text>
-          <Text style={{marginTop: 3.5}}>{reportObj.plateNumber}</Text>
-        </View>
+          <Text style={{fontSize: 18, marginTop: 15}}>Description:</Text>
         
-      </ScrollView>
-      
-    </View>
-  );
+          <Text style={{marginVertical: 5}}>{reportObj.desc}</Text>
+  
+          <Text style={{fontSize: 18, marginVertical: 35, borderWidth: 1, paddingVertical: 60, paddingHorizontal: 20}}>No picture available</Text>
+  
+          <View style={styles.sameLine}>
+            <Text style={{fontSize: 18}}>Location of incident: </Text>
+            <Text style={{marginTop: 3.5}}>{reportObj.location}</Text>
+          </View>
+          
+          <View style={styles.sameLine}>
+            <Text style={{fontSize: 18}}>Make and Model: </Text>
+            <Text style={{marginTop: 3.5}}>{reportObj.model}</Text>
+          </View>
+  
+          <View style={styles.sameLine}>
+            <Text style={{fontSize: 18}}>License plate number: </Text>
+            <Text style={{marginTop: 3.5}}>{licensePlate}</Text>
+          </View>
+          
+        </ScrollView>
+        
+      </View>
+    );
+  }
+  else{
+    return (
+      <View style={styles.container}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <Text style={{fontSize: 36}}>{reportObj.title}</Text>
+          <View style={styles.sameLine}>
+            <Text style={{fontSize: 18}}>Date of incident: </Text>
+            <Text style={{marginTop: 3.5}}>{reportObj.date}</Text>
+          </View>
+        
+          <Text style={{fontSize: 18, marginTop: 15}}>Description:</Text>
+        
+          <Text style={{marginVertical: 5}}>{reportObj.desc}</Text>
+  
+          <Image
+            style={{height: 200, width: 200, marginVertical: 5, borderWidth: 3, borderColor: '#000000',}}
+            source={{uri: reportObj.image}}
+          />
+  
+          <View style={styles.sameLine}>
+            <Text style={{fontSize: 18}}>Location of incident: </Text>
+            <Text style={{marginTop: 3.5}}>{reportObj.location}</Text>
+          </View>
+          
+          <View style={styles.sameLine}>
+            <Text style={{fontSize: 18}}>Make and Model: </Text>
+            <Text style={{marginTop: 3.5}}>{reportObj.model}</Text>
+          </View>
+  
+          <View style={styles.sameLine}>
+            <Text style={{fontSize: 18}}>License plate number: </Text>
+            <Text style={{marginTop: 3.5}}>{licensePlate}</Text>
+          </View>
+          
+        </ScrollView>
+        
+      </View>
+    );
+  }
+  
 }
 
 const Stack = createStackNavigator();
@@ -93,12 +171,14 @@ export default class BrowseScreen extends React.Component {
        super(props);
        this.state = {
            timePassed: false,
+           data: [],
        }
    }
 
     setTimePassed() {
         this.setState({timePassed: true});
     }
+
 
   componentDidMount() {
     reportArray = [];
@@ -133,6 +213,7 @@ export default class BrowseScreen extends React.Component {
       });
   }
 
+
   render() {
     if(this.state.timePassed === false){
         return (
@@ -144,6 +225,7 @@ export default class BrowseScreen extends React.Component {
     else{
         console.log(JSON.stringify(reportArray));
         return (
+
             <Stack.Navigator
                 initialRouteName={'ReportsList'}
                 screenOptions={{headerShown: false}}>

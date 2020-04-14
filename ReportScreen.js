@@ -52,7 +52,7 @@ export default class ReportScreen extends React.Component {
       location: null,
       model: null,
       color: null,
-      plateNumber: null,
+      plateNumber: '',
       date: '',
       imgPath: ' ',
     };
