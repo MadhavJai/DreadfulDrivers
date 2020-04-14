@@ -33,7 +33,6 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import ReportScreen from './ReportScreen';
 import BrowseReportsScreen from './BrowseReportsScreen';
-import PreferencesScreen from './PreferencesScreen';
 import SplashScreen from './SplashScreen';
 
 
@@ -41,13 +40,6 @@ console.disableYellowBox = true;
 
 
 //functions for navigating through the multiple pages in the application
-function showPreferences({navigation}) {
-  return (
-    <View style={styles.container}>
-      <PreferencesScreen />
-    </View>
-  );
-}
 
 function showBrowseScreen({navigation}) {
   return <BrowseReportsScreen />;
@@ -145,7 +137,6 @@ export default class App extends React.Component {
               name={'Browse Reports'}
               component={showBrowseScreen}
             />
-            <Stack.Screen name={'Preferences'} component={showPreferences} />
           </Stack.Navigator>
         </NavigationContainer>
       );
