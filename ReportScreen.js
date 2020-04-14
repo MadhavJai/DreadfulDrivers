@@ -12,8 +12,6 @@ import {
   PermissionsAndroid, ScrollView, RefreshControl,
 } from 'react-native';
 
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
 import ImagePicker from 'react-native-image-crop-picker';
 import DatePicker from 'react-native-datepicker';
 import Geolocation from 'react-native-geolocation-service';
@@ -94,6 +92,7 @@ export default class ReportScreen extends React.Component {
               style={styles.input}
             placeholder={'Enter location'}
             returnKeyLabel={'next'}
+              value={this.state.location}
             onChangeText={text => this.setState({location: text})}
               ref={input => { this.location = input }}
           />
@@ -122,6 +121,7 @@ export default class ReportScreen extends React.Component {
             ref={input => { this.model = input }}
         />
         <View style={styles.horizontal}>
+          <Text style={styles.importantText2}>* </Text>
           <Text style={{marginTop : 3}}>Color:</Text>
         </View>
         <TextInput
@@ -230,14 +230,18 @@ export default class ReportScreen extends React.Component {
         await Geolocation.getCurrentPosition(
           position => {
             console.log(position);
-            var latitude = JSON.stringify(position.coords.latitude);
-            var longitude = JSON.stringify(position.coords.longitude);
+            var latitude = parseFloat(JSON.stringify(position.coords.latitude)).toFixed(2).toString();
+            var longitude = parseFloat(JSON.stringify(position.coords.longitude)).toFixed(2).toString();
+
+
+
             Alert.alert(
               'Location Retrieved',
               'latitude : ' + latitude + '\nlongitude : ' + longitude,
             );
             this.setState({longitude: longitude});
             this.setState({latitude: latitude});
+            this.setState({location : latitude + ',' + longitude});
           },
           error => {
             // See error code charts below.
@@ -308,6 +312,9 @@ export default class ReportScreen extends React.Component {
     }
     if (this.state.model == null) {
       missingFields += '\nCar Model';
+    }
+    if (this.state.color == null) {
+      missingFields += '\nColor';
     }
     if (this.state.date == '') {
       missingFields += '\nDate information';
