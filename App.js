@@ -36,7 +36,7 @@ import BrowseReportsScreen from './BrowseReportsScreen';
 import PreferencesScreen from './PreferencesScreen';
 import SplashScreen from './SplashScreen';
 
-//console.disableYellowBox = true;
+console.disableYellowBox = true;
 function showPreferences({navigation}) {
   return (
     <View style={styles.container}>
@@ -61,7 +61,6 @@ function showHomeScreen({navigation}) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Dreadful Drivers</Text>
-      <Text>By: Arjun Suthaharan and Madhav Jaisankar</Text>
       <Image
         style={{
           width: 330,
@@ -84,7 +83,7 @@ function showHomeScreen({navigation}) {
           onPress={() => navigation.navigate('Browse Reports')}
         />
       </View>
-
+      <Text style={styles.footer}>Arjun Suthaharan and Madhav Jaisankar</Text>
 
     </View>
   );
@@ -188,6 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     padding: 4,
     paddingRight: 12,
+    marginTop : 25,
     textAlign: 'right',
   },
   seperator: {

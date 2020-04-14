@@ -5,7 +5,7 @@ import {Colors} from 'react-native/Libraries/NewAppScreen';
 export default ({history}) => (
   <View style={styles.container}>
     <Text style={styles.title}>Dreadful Drivers</Text>
-    <Text>By: Arjun Suthaharan and Madhav Jaisankar</Text>
+
     <Image
       style={{
         width: 350,
@@ -13,6 +13,7 @@ export default ({history}) => (
       }}
       source={require('./logo.png')}
     />
+    <Text style={styles.footer}>Arjun Suthaharan and Madhav Jaisankar</Text>
     <Text style={{color: '#ff0000'}}> Warning : DO NOT create or browse reports while driving!</Text>
   </View>
 );
