@@ -22,7 +22,7 @@ import { SearchBar } from 'react-native-elements';
 
 var reportArray = [];
 
-// Doesn't work as intended
+//function used to render searchbar
 function renderHeader() {
   return (
     <SearchBar
@@ -31,26 +31,19 @@ function renderHeader() {
       round
       onChangeText={text => 1}
       autoCorrect = {false}
-      // value = {this.state.queryValue}
     />
   )
 }
-
-// Doesn't work
+//function used to search reports (not completed)
 function searchAndFilter(text) {
-  // this.setState({
-  //   queryValue: text
-  // })
   const filteredData = reportArray.filter(item => {
     const itemData = `${item.title.toUpperCase()}`;
     const textData = text.toUpperCase();
     return itemData.indexOf(textData) > -1;
   });
-  // this.setState({
-  //   data: filteredData
-  // });
-}  
+}
 
+//function used to render and display all the browse data entries
 function showFlatList({navigation}) {
   return (
     <FlatList
@@ -65,6 +58,7 @@ function showFlatList({navigation}) {
             <Text style={styles.title}>
               {item.idNum + 1}. {item.title}
             </Text>
+            <Text style={styles.subTitle}>{item.location}</Text>
             <Text style={styles.subTitle}>{item.date}</Text>
           </View>
         </TouchableOpacity>
@@ -75,6 +69,7 @@ function showFlatList({navigation}) {
   );
 }
 
+//function used to display the details screen of each report
 function showDetailsScreen({route, navigation}) {
   const {reportObj} = route.params;
   var licensePlate;
@@ -89,35 +84,35 @@ function showDetailsScreen({route, navigation}) {
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.scrollView}>
             <Text style={{fontSize: 36, textAlign: 'center'}}>{reportObj.title}</Text>
-          
+
           <View style={styles.sameLine}>
             <Text style={{fontSize: 18}}>Date of incident: </Text>
             <Text style={{marginTop: 3.5}}>{reportObj.date}</Text>
           </View>
-        
+
           <Text style={{fontSize: 18, marginTop: 15}}>Description:</Text>
-        
+
           <Text style={{marginVertical: 5}}>{reportObj.desc}</Text>
-  
+
           <Text style={{fontSize: 18, marginVertical: 35, borderWidth: 1, paddingVertical: 60, paddingHorizontal: 20}}>No picture available</Text>
-  
+
           <View style={styles.sameLine}>
             <Text style={{fontSize: 18}}>Location of incident: </Text>
             <Text style={{marginTop: 3.5}}>{reportObj.location}</Text>
           </View>
-          
+
           <View style={styles.sameLine}>
             <Text style={{fontSize: 18}}>Make and Model: </Text>
             <Text style={{marginTop: 3.5}}>{reportObj.model}</Text>
           </View>
-  
+
           <View style={styles.sameLine}>
             <Text style={{fontSize: 18}}>License plate number: </Text>
             <Text style={{marginTop: 3.5}}>{licensePlate}</Text>
           </View>
-          
+
         </ScrollView>
-        
+
       </View>
     );
   }
@@ -130,43 +125,43 @@ function showDetailsScreen({route, navigation}) {
             <Text style={{fontSize: 18}}>Date of incident: </Text>
             <Text style={{marginTop: 3.5}}>{reportObj.date}</Text>
           </View>
-        
+
           <Text style={{fontSize: 18, marginTop: 15}}>Description:</Text>
-        
+
           <Text style={{marginVertical: 5}}>{reportObj.desc}</Text>
-  
+
           <Image
             style={{height: 200, width: 200, marginVertical: 5, borderWidth: 3, borderColor: '#000000',}}
             source={{uri: reportObj.image}}
           />
-  
+
           <View style={styles.sameLine}>
             <Text style={{fontSize: 18}}>Location of incident: </Text>
             <Text style={{marginTop: 3.5}}>{reportObj.location}</Text>
           </View>
-          
+
           <View style={styles.sameLine}>
             <Text style={{fontSize: 18}}>Make and Model: </Text>
             <Text style={{marginTop: 3.5}}>{reportObj.model}</Text>
           </View>
-  
+
           <View style={styles.sameLine}>
             <Text style={{fontSize: 18}}>License plate number: </Text>
             <Text style={{marginTop: 3.5}}>{licensePlate}</Text>
           </View>
-          
+
         </ScrollView>
-        
+
       </View>
     );
   }
-  
+
 }
 
 const Stack = createStackNavigator();
 
 export default class BrowseScreen extends React.Component {
-
+//constructor used to initialize variables that will be used throughout the code
    constructor(props) {
        super(props);
        this.state = {
@@ -175,6 +170,7 @@ export default class BrowseScreen extends React.Component {
        }
    }
 
+   //setting async timesetting for retrieving data
     setTimePassed() {
         this.setState({timePassed: true});
     }
@@ -182,7 +178,7 @@ export default class BrowseScreen extends React.Component {
 
   componentDidMount() {
     reportArray = [];
-
+    //configuring Firebase to retrieve reports currently stored in the online database
     const firebaseConfig = {
       apiKey: 'AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc',
       authDomain: 'dreadful-drivers.firebaseapp.com',
@@ -205,15 +201,12 @@ export default class BrowseScreen extends React.Component {
           var reportKey = childSnapshot.key;
           var reportData = childSnapshot.val();
           reportArray.push(reportData);
-          console.log(JSON.stringify(reportKey));
-          console.log(JSON.stringify(reportData));
-          console.log(JSON.stringify(reportArray));
           this.setTimePassed();
         });
       });
   }
 
-
+  //rendering all the visual components in the application
   render() {
     if(this.state.timePassed === false){
         return (
@@ -223,7 +216,7 @@ export default class BrowseScreen extends React.Component {
         );
     }
     else{
-        console.log(JSON.stringify(reportArray));
+
         return (
 
             <Stack.Navigator
@@ -241,7 +234,7 @@ export default class BrowseScreen extends React.Component {
 const styles = StyleSheet.create({
 
   centerText: {
-    alignItems: 'center', 
+    alignItems: 'center',
   },
     loadingState: {
         flex: 1,

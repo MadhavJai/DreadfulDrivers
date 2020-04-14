@@ -36,7 +36,11 @@ import BrowseReportsScreen from './BrowseReportsScreen';
 import PreferencesScreen from './PreferencesScreen';
 import SplashScreen from './SplashScreen';
 
+
 console.disableYellowBox = true;
+
+
+//functions for navigating through the multiple pages in the application
 function showPreferences({navigation}) {
   return (
     <View style={styles.container}>
@@ -51,9 +55,7 @@ function showBrowseScreen({navigation}) {
 
 function showReportScreen({navigation, route}) {
   return (
-    // <View style={styles.container}>
     <ReportScreen />
-    // </View>
   );
 }
 
@@ -89,6 +91,7 @@ function showHomeScreen({navigation}) {
   );
 }
 
+//function to display splash screen to user
 function showSplashScreen({navigation}) {
   return (
     <View style={styles.container}>
@@ -101,6 +104,7 @@ function showSplashScreen({navigation}) {
 const Stack = createStackNavigator();
 
 export default class App extends React.Component {
+  //constructor for variables used throughout code
   constructor(props) {
     super(props);
     this.state = {
@@ -114,10 +118,12 @@ export default class App extends React.Component {
     }, 2000);
   }
 
+  //setting boolean for if splash screen has reached time
   setTimePassed() {
     this.setState({timePassed: true});
   }
 
+  //rendering visual components that will be seen by the user
   render() {
     if (this.state.timePassed === false) {
       return (

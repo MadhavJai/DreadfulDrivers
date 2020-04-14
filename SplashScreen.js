@@ -3,6 +3,7 @@ import {View, Text, Button, Linking, Image, StyleSheet} from 'react-native';
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 
 export default ({history}) => (
+    //Displaying splashscreen that appears when application is first opened
   <View style={styles.container}>
     <Text style={styles.title}>Dreadful Drivers</Text>
 

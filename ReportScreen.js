@@ -22,9 +22,9 @@ import ImgToBase64 from 'react-native-image-base64';
 const tempArray = [];
 
 
-
-
 export default class ReportScreen extends React.Component {
+
+  //mounting firebase to application, to read and write data being stored in the online database
   componentDidMount() {
     const firebaseConfig = {
       apiKey: 'AIzaSyCiS4hoJgPXTRClfOUI-dBQ6hPkdgohqdc',
@@ -41,6 +41,7 @@ export default class ReportScreen extends React.Component {
     }
   }
 
+  //initializing variables that will be used throughout the program
   constructor(props) {
     super(props);
     this.state = {
@@ -214,6 +215,7 @@ export default class ReportScreen extends React.Component {
     );
   }
 
+  //function called to retrieve location information using devices GPS
   getLocation = async () => {
     try {
       const granted = await PermissionsAndroid.request(
@@ -229,7 +231,6 @@ export default class ReportScreen extends React.Component {
         console.log('Location permission granted!');
         await Geolocation.getCurrentPosition(
           position => {
-            console.log(position);
             var latitude = parseFloat(JSON.stringify(position.coords.latitude)).toFixed(2).toString();
             var longitude = parseFloat(JSON.stringify(position.coords.longitude)).toFixed(2).toString();
 
@@ -243,7 +244,6 @@ export default class ReportScreen extends React.Component {
             this.setState({location : latitude + ',' + longitude});
           },
           error => {
-            // See error code charts below.
             console.log(error.code, error.message);
           },
         );
@@ -262,7 +262,7 @@ export default class ReportScreen extends React.Component {
       .catch(error => console.warn(error));
   };
 
-
+  //function used to open native camera and take picture, crop it and store it as Base64 Data URI
   capture = () => {
     ImagePicker.openCamera({
       width: 300,
@@ -271,7 +271,6 @@ export default class ReportScreen extends React.Component {
       includeBase64: true,
     })
       .then(image => {
-        //once promise is met, sets imgPath state to the images path
         ImgToBase64.getBase64String(image.path)
         .then(base64String => {
 
@@ -289,10 +288,12 @@ export default class ReportScreen extends React.Component {
       });
   };
 
+  //function to reset image to blank
   resetImage = () => {
     this.setState({imgPath: ' '});
   };
 
+  //function that retrievs all user inputted data, stores it into variables, and sends the data to oneline database (Firebase)
   publish = () => {
     var missingFields = 'Provide details in the following fields: \n';
 
